@@ -47,3 +47,10 @@ def add_cart():
         else:
             session['cart'] = dictItems
             return jsonify({})
+
+@carts.route('/order-now', methods=['GET', 'POST'])
+def order_now():
+    if request.method ==  "POST":
+        formdata = json.loads(request.data)
+        print(formdata)
+    return render_template('cart2.html')
