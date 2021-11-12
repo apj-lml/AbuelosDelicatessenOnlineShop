@@ -24,3 +24,29 @@ def page_not_found(e):
 def get_orders():
 
     return render_template('orders.html')
+
+@orders.route('/order-now', methods=['GET', 'POST'])
+def order_now():
+	if request.method ==  "POST":
+		formdata = json.loads(request.data)
+
+		#print(session['cart'])
+		#from_cart = json.loads(session['cart'])
+	
+		#print(json.dumps(c))
+
+		for key, product in session['cart'].items():
+			d = {**formdata, **product}
+			d.pop('paymentMethod')
+			d.pop('product_price')
+			d.pop('product_title')
+
+
+			new_customer_order = CustomerOrder(**d)
+
+			db.session.add(new_customer_order)
+			db.session.flush()
+			db.session.commit()
+
+			print(d)
+	return jsonify({})

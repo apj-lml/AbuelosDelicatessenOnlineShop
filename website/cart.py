@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, abort, session, flash, redirect, url_for, jsonify, request
-from .models import Product
+from .models import CustomerOrder, Product
+from . import db
 import json
 carts = Blueprint('cart', __name__)
 
@@ -47,3 +48,4 @@ def add_cart():
         else:
             session['cart'] = dictItems
             return jsonify({})
+
