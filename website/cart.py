@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, abort, session, flash, redirect, url_for, jsonify, request
-from .models import Product
+from .models import CustomerOrder, Product
+from . import db
 import json
 carts = Blueprint('cart', __name__)
 
@@ -48,9 +49,3 @@ def add_cart():
             session['cart'] = dictItems
             return jsonify({})
 
-@carts.route('/order-now', methods=['GET', 'POST'])
-def order_now():
-    if request.method ==  "POST":
-        formdata = json.loads(request.data)
-        print(formdata)
-    return render_template('cart2.html')

@@ -28,6 +28,7 @@ class CustomerOrder(db.Model):
 	contact_number = db.Column(db.String(50))
 	order_qty = db.Column(db.Integer)
 	order_status = db.Column(db.String(20), default='Pending', nullable = False)
+	timestamp = db.Column(db.DateTime(timezone=True), default=func.now())
 	products = db.relationship('Product', secondary='link', backref=db.backref('orders'))
 
 
