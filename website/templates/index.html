@@ -1,6 +1,9 @@
 {%extends 'base.html'%}
 {% block title %} Abuelo's Delicatessen {%endblock%}
-
+{% block cssperfile %}
+<style>
+</style>
+{%endblock%}
 {%block content%}
 <main id="main">
     <!-- ======= About Section ======= -->
@@ -85,64 +88,32 @@
 
 
 
-    <section class="pt-5 pb-5">
-      <div class="container">
-        <div class="row">
-          <div id="carouselExampleInterval" class="carousel carousel-dark slide " data-bs-ride="carousel">
-            <div class="row">
-              <div class="col-sm-6 ">
-                <div class="section-title text-start">
-                  <h2>Our<span>Products</span></h2>
-                  <!-- <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p> -->
-                </div>
+        <div class="container text-center my-3">
+          <h2 class="font-weight-light">Prodcut Slide</h2>
+          <div class="row mx-auto my-auto justify-content-center">
+              <div id="carouselExampleInterval" class="carousel slide carousel-dark" data-bs-ride="carousel">
+                  <div class="carousel-inner" role="listbox" id="products_card">
+                      <!-- <div class="carousel-item">
+                          <div class="col-md-3">
+                              <div class="card">
+                                  <div class="card-img">
+                                      <img src="//via.placeholder.com/500x400/fc0?text=6" class="img-fluid">
+                                  </div>
+                                  <div class="card-img-overlay">Slide 6</div>
+                              </div>
+                          </div>
+                      </div> -->
+                  </div>
+                  <a class="carousel-control-prev bg-transparent w-aut" href="#carouselExampleInterval" role="button" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  </a>
+                  <a class="carousel-control-next bg-transparent w-aut" href="#carouselExampleInterval" role="button" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  </a>
               </div>
-              <div class="col-sm-6 text-right text-end">
-                <button class="btn btn-sm" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="btn btn-sm" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
-              </div>
-            </div>
-
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <div class="row justify-content-xs-center" id="active_products">
-                  <!-- <div class="col-xs-6 col-sm-4">
-                    <div class="card text-center" style="width:400px">
-                      <img src="{{ url_for('static', filename = '/img/specials-1.jpg')}}" class="d-block rounded mx-auto w-50 h-50" alt="...">
-                      <div class="card-body">
-                        <h4 class="card-title">John Doe</h4>
-                        <p class="card-text">Some example text.</p>
-                        <a href="#" class="btn btn-primary">Add to Cart</a>
-                      </div>
-                    </div>
-                  </div> -->
-              </div>
-              </div>
-              <div class="carousel-item">
-                <div class="row" id="list_of_products">
-                  <!-- <div class="col-xs-6 col-sm-3">
-                    <div class="card text-center" style="width:400px">
-                      <img src="{{ url_for('static', filename = '/img/specials-1.jpg')}}" class="d-block rounded mx-auto w-50 h-50" alt="...">
-                      <div class="card-body">
-                        <h4 class="card-title">John Doe</h4>
-                        <p class="card-text">Some example text.</p>
-                        <a href="#" class="btn btn-primary">See Profile</a>
-                      </div>
-                    </div>
-                  </div> -->
-                </div>
-
-              </div>
-            </div>
           </div>
-        </div>
+          <!-- <h5 class="mt-2 fw-light">advances one slide at a time</h5> -->
       </div>
-    </section>
 
 
     <!-- ======= Menu Section ======= -->
@@ -157,9 +128,9 @@
           <div class="col-lg-12 d-flex justify-content-center">
             <ul id="menu-flters">
               <li data-filter="*" class="filter-active">Show All</li>
-              <li data-filter=".filter-meat">Meat</li>
-              <li data-filter=".filter-seafood">Seafood</li>
-              <li data-filter=".filter-others">Others</li>
+              <li data-filter=".filter-Meat">Meat</li>
+              <li data-filter=".filter-Seafood">Seafood</li>
+              <li data-filter=".filter-Others">Others</li>
             </ul>
           </div>
         </div>
@@ -679,9 +650,13 @@
 
 {%block jsperfile%}
 <script type="text/javascript">
-   // var myCarousel = document.querySelector('#carouselExampleInterval')
-    //var carousel = new bootstrap.Carousel(myCarousel)
+
+
+
+
 $(document).ready(function(){
+
+
 
   fetch('/product/product-get', {
         method: 'GET',
@@ -690,8 +665,9 @@ $(document).ready(function(){
             console.log(data)
 
             data.forEach(product => {
+
               document.getElementById('generate-menu').innerHTML += `
-              <div class="col-lg-6 menu-item filter-seafood">
+              <div class="col-lg-6 menu-item filter-${product.product_category}">
                 <div class="menu-content">
                   <a href="#">${product.product_title}</a><span>Php ${product.product_price}</span>
                 </div>
@@ -703,55 +679,73 @@ $(document).ready(function(){
             });
 
 
-            var count_active = document.getElementById(
-                "active_products").childElementCount;
-            if(count_active <= 3){
-              data.forEach(product => {
-              document.getElementById('active_products').innerHTML += `
-              <div class="col">
-                    <div class="card" style="width:auto">
-                      <img src="{{ url_for('static', filename = '/img/specials-1.jpg')}}" class="d-block rounded mx-auto w-50 h-50" alt="...">
-                      <div class="card-body text-center">
-                        <h4 class="card-title">${product.product_title}</h4>
-                        <p class="card-text">${product.product_description}</p>
+            var count_active = 1;
+
+            data.forEach(product => {
+            //alert(count_active)
+            if(count_active <= 1){
+             
+              document.getElementById('products_card').innerHTML += `
+                      <div class="carousel-item active">
+                          <div class="col-md-4 col-xs-4">
+                              <div class="card">
+                                  <div class="card-img">
+                                      <img src="{{ url_for('static', filename = '/img/specials-1.jpg')}}" class="img-fluid">
+                                  </div>
+                                  <div class="card-body text-center">
+                                    <h4 class="card-title">${product.product_title}</h4>
+                                    <p class ="card-text" ><small class=" text-muted">${product.product_description}</small></p>
 
 
-                          <input type="number" class="form-control" id="product_qty_${product.id}" placeholder="Quantity" min ="1" value="1">
-                          <a javascript:void(0) class="book-a-table-btn" id="${product.id}" onclick="add_to_cart(this)">View</a>
-                        <a javascript:void(0) class="book-a-table-btn" id="${product.id}" onclick="add_to_cart(this)">Add to Cart</a>
+                                      <input type="number" class="form-control" id="product_qty_${product.id}" placeholder="Quantity" min ="1" value="1">
+                                      <a javascript:void(0) class="book-a-table-btn" id="${product.id}" onclick="add_to_cart(this)"><i class="bi bi-eye"></i></a>
+                                    <a javascript:void(0) class="book-a-table-btn" id="${product.id}" onclick="add_to_cart(this)"><i class="bi bi-cart-plus"></i></a>
+                                  </div>
+                              </div>
+                          </div>
                       </div>
-                    </div>
-                  </div>
-              `
-            });
+              `;
 
-            
             }else{
-              data.forEach(product => {
-              document.getElementById('list_of_products').innerHTML += `
-              <div class="col-md-4 col-sm-6">
-                    <div class="card text-center" style="width:50em">
-                      <img src="{{ url_for('static', filename = '/img/specials-1.jpg')}}" class="d-block rounded mx-auto w-50 h-50" alt="...">
-                      <div class="card-body">
-                        <h4 class="card-title">${product.product_title}</h4>
-                        <p class="card-text">${product.product_description}</p>
-                        
+              document.getElementById('products_card').innerHTML += `
+                      <div class="carousel-item">
+                          <div class="col-md-4 col-xs-4">
+                              <div class="card">
+                                  <div class="card-img">
+                                      <img src="{{ url_for('static', filename = '/img/specials-1.jpg')}}" class="img-fluid">
+                                  </div>
+                                  <div class="card-body text-center">
+                                    <h4 class="card-title">${product.product_title}</h4>
+                                    <p class ="card-text" ><small class=" text-muted">${product.product_description}</small></p>
 
-                          <input type="number" class="form-control" id="product_qty_${product.id}" placeholder="Quantity" min ="1" value="1">
 
-                        <a javascript:void(0) class="book-a-table-btn" id="${product.id}" onclick="add_to_cart(this)">Add to Cart</a>
+                                      <input type="number" class="form-control" id="product_qty_${product.id}" placeholder="Quantity" min ="1" value="1">
+                                      <a javascript:void(0) class="book-a-table-btn" id="${product.id}" onclick="add_to_cart(this)"><i class="bi bi-eye"></i></a>
+                                    <a javascript:void(0) class="book-a-table-btn" id="${product.id}" onclick="add_to_cart(this)"><i class="bi bi-cart-plus"></i></a>
+                                  </div>
+                              </div>
+                          </div>
                       </div>
-                    </div>
-                  </div>
               `
-            });
             }
-            // document.getElementById('product_title'). value = data.product_title
-            // document.getElementById('product_price'). value = data.product_price
-            // document.getElementById('product_qty'). value = data.product_qty
-            // document.getElementById('product_description'). value = data.product_description
-            // document.getElementById('product_id'). value = data.id
-            // document.getElementById('product_category'). value = data.product_category
+            count_active += 1;  
+            });
+
+            let items = document.querySelectorAll('#carouselExampleInterval .carousel-item')
+            items.forEach((el) => {
+              // number of slides per carousel-item
+              const minPerSlide = 3
+              let next = el.nextElementSibling
+              for (var i=1; i<minPerSlide; i++) {
+                  if (!next) {
+                      // wrap carousel by using first child
+                      next = items[0]
+                  }
+                  let cloneChild = next.cloneNode(true)
+                  el.appendChild(cloneChild.children[0])
+                  next = next.nextElementSibling
+              }
+          })
 
 
           })

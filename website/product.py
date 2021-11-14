@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from flask_login import current_user, login_user, logout_user, login_required
 from datetime import datetime, date
-from .models import Product, CustomerOrder, Link, ProductImage
+from .models import Product, CustomerOrder, ProductImage
 from . import db
 import os, os.path
 import json
@@ -33,7 +33,7 @@ def add_product():
     if request.method == 'POST':
         #formdata = json.loads(request.data)
         formdata = request.form.to_dict()
-        print(request.files['product_images[]'])
+
         if formdata['add_or_update'] == 'add':
 
             formdata.pop('add_or_update')
@@ -48,31 +48,35 @@ def add_product():
 
             #------------------this is for file upload--------------
             final_name = ''
-            for afile in request.files:
-                file = request.files[afile]
+            items = request.files.getlist("product_images[]")
 
-                print(f'print file: {afile}')
-                if afile not in request.files:
-                    print('No file selected part')
-                    return redirect(request.url)
+            for afile in items:
+                print(afile.filename)
+                #file = request.files[afile]
 
-                if not file and allowed_file(file.filename):
+               # print(f'print file: {afile}')
+                # if afile not in items:
+                #     print('No file selected part')
+                #     return redirect(request.url)
+
+                if not afile and allowed_file(afile.filename):
                     print('Invalid file submitted')
                     return redirect(request.url)
                 else:
                     milliseconds = int(round(time.time() * 1000))
-                    file_extension = file.filename.rsplit('.', 1)[1].lower()
-                    file_name = file.filename.rsplit('.', 1)[0]
+                    file_extension = afile.filename.rsplit('.', 1)[1].lower()
+                    file_name = afile.filename.rsplit('.', 1)[0]
                     final_name = secure_filename(formdata['product_title'] +'_' + str(milliseconds) +'.'+file_extension)
+                    print('file name: ', file_name)
                     if os.path.isfile(current_app.config['UPLOAD_FOLDER']):
                         print('path does not exist... creating path')
                         os.mkdir(current_app.config['UPLOAD_FOLDER'])
                     else:
                         print('path exist!')
-                        file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], final_name))
+                        afile.save(os.path.join(current_app.config['UPLOAD_FOLDER'], final_name))
 
                         #saving upload info to database
-                        files_to_upload = ProductImage(image_path = '\\static\\img\\product_images\\'+final_name, file_tag = afile, user_id = new_product.id)
+                        files_to_upload = ProductImage(image_path = '\\static\\img\\product_images\\'+final_name, file_name = final_name, product_id = new_product.id)
                         db.session.add(files_to_upload)
                         db.session.commit()
         #------------------end of file upload--------------------
@@ -86,7 +90,7 @@ def add_product():
 
             db.session.commit()
 
-        return 'ok', 200
+        #return 'ok', 200
     return render_template('dashboard.html')
 
 @product.route('product-order', methods=['GET', 'POST'])
