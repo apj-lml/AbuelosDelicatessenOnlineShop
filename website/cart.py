@@ -29,7 +29,7 @@ def add_cart():
     product = Product.query.filter_by(id = formdata["product_id"]).first()
 
     if request.method ==  "POST":
-        dictItems = {product_id:{'product_title':product.product_title, 'product_price': product.product_price, 'order_qty': order_qty}}
+        dictItems = {product_id:{'product_id':product.id, 'product_title':product.product_title, 'product_price': product.product_price, 'order_qty': order_qty}}
 
         if 'cart' in session:
             if product_id in session['cart']:
