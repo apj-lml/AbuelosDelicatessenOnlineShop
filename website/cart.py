@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, abort, session, flash, redirect, u
 from .models import CustomerOrder, Product
 from . import db
 import json
+import uuid
+
 carts = Blueprint('cart', __name__)
 
 @carts.route('/cs')
