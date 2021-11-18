@@ -29,7 +29,7 @@ def index():
 @admin_permission.require(http_exception=403)
 def get_orders():
 	if request.method == 'GET':
-		customer_order = db.session.query(CustomerOrder).group_by(CustomerOrder.last_name, CustomerOrder.first_name, CustomerOrder.middle_name, CustomerOrder.timestamp).all()
+		customer_order = db.session.query(CustomerOrder).group_by(CustomerOrder.anonymous_user_id, CustomerOrder.timestamp).all()
 		column_keys1 = CustomerOrder.__table__.columns.keys()
     # Temporary dictionary to keep the return value from table
 		rows_dic_temp1 = {}
@@ -48,8 +48,8 @@ def get_orders():
 def order_now():
 	if request.method ==  "POST":
 		formdata = json.loads(request.data)
-
-		#print(session['cart'])
+		formdata['anonymous_user_id'] = session['anonymous_user_id']
+		print(formdata)
 		#from_cart = json.loads(session['cart'])
 	
 		#print(json.dumps(c))

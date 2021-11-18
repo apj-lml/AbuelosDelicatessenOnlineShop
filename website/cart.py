@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, abort, session, flash, redirect, u
 from .models import CustomerOrder, Product
 from . import db
 import json
+import uuid
 carts = Blueprint('cart', __name__)
 
 @carts.route('/cs')
@@ -29,6 +30,7 @@ def add_cart():
     product = Product.query.filter_by(id = formdata["product_id"]).first()
 
     if request.method ==  "POST":
+        session['anonymous_user_id'] = uuid.uuid4().hex
         dictItems = {product_id:{'product_id':product.id, 'product_title':product.product_title, 'product_price': product.product_price, 'order_qty': order_qty}}
 
         if 'cart' in session:
