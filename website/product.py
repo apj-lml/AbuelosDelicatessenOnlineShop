@@ -52,12 +52,6 @@ def add_product():
 
             for afile in items:
                 print(afile.filename)
-                #file = request.files[afile]
-
-               # print(f'print file: {afile}')
-                # if afile not in items:
-                #     print('No file selected part')
-                #     return redirect(request.url)
 
                 if not afile and allowed_file(afile.filename):
                     print('Invalid file submitted')
