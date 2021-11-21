@@ -20,6 +20,7 @@ class User(db.Model, UserMixin):
 class CustomerOrder(db.Model, SerializerMixin):
 	id = db.Column(db.Integer, primary_key = True)
 	anonymous_user_id = db.Column(db.String(250))
+	invoice = db.Column(db.String(250))
 	last_name = db.Column(db.String(250))
 	first_name = db.Column(db.String(250))
 	middle_name = db.Column(db.String(250))

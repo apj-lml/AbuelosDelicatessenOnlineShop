@@ -23,11 +23,6 @@
 
     <section class="inner-page">
       <div class="container">
-          <div class="row mb-5">
-            <div class="col-md">
-              <a class="btn book-a-table-btn" data-bs-toggle="modal" data-bs-target="#addProduct" onclick="add_product_btn()">Add Product</a>
-            </div>
-          </div>
           <div class="row">
             <div class="col-md">
             <div class="table-responsive">
@@ -61,50 +56,39 @@
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="modal-title">Add Product</h3>
+        <h3 class="modal-title" id="modal-title">Order Detail</h3>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="#" method="POST" id="add_product_form">
-        <input type="text" value="" id="add_or_update" name="add_or_update">
-        <input type="text" value="" id="product_id" name="product_id">
-        <div class="modal-body container">
-          <div class="row">
-            <div class="col-md">
-              <!-- <div class="d-sm-flex flex-row"> -->
-                <div class="form-group">
-                  <label for="product_title">Product Title</label>
-                  <input type="text" class="form-control" id="product_title" name="product_title">
+      <form action="#" method="POST" id="order_detail_form">
+        <!-- <input type="text" value="" id="order_id" name="order_id"> -->
+        <div class="modal-body">
+          <section class="inner-page">
+            <div class="container">
+                <div class="row">
+                  <div class="col-md">
+                  <div class="table-responsive">
+                    <table id="order_detail_table" class="table table-striped align-middle" style="width:100%">
+                      <thead>
+                          <tr>
+                              <th>Order ID</th>
+                              <th>Customer</th>
+                              <th>Delivery Address</th>
+                              <th>Email</th>
+                              <th>Contact #</th>
+                              <!-- <th>Order Qty</th> -->
+                              <th>Order Status</th>
+                              <th>Order Date</th>
+                              <th>Controls</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                      </table>
+                      </div>
+                  </div>
                 </div>
-              <!-- </div> -->
             </div>
-            <div class="col-md">
-              <div class="form-group">
-                <label for="product_price">Product Price</label>
-                <input type="number" class="form-control" id="product_price" name="product_price">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md">
-              <!-- <div class="d-sm-flex flex-row"> -->
-                <div class="form-group">
-                  <label for="product_qty">Product Quantity</label>
-                  <input type="text" class="form-control" id="product_qty" name="product_qty">
-                </div>
-              <!-- </div> -->
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md">
-              <!-- <div class="d-sm-flex flex-row"> -->
-                <div class="form-group">
-                  <label for="product_description">Product Description</label>
-                  <textarea type="text" class="form-control" id="product_description" name="product_description" rows="8"></textarea>
-                </div>
-              <!-- </div> -->
-            </div>
-          </div>
-        </div>
+          </section>
         <div class="modal-footer">
           <button type="submit" class="btn book-a-table-btn" id="add_product_button">Add</button>
         </div>
@@ -112,6 +96,7 @@
     </div>
   </div>
 </div>
+
   {% endblock %}
 
   {%block jsperfile%}
@@ -139,12 +124,21 @@
             { "data": "contact_number" },
           //  { "data": "order_qty" },
             { "data": "order_status" },
-           { "data": "timestamp" },
-
+            {
+            data: null, 
+            render: function (data, type, row) { 
+              var d = new Date(data.timestamp);
+              var curr_day = d.getDate();
+              var curr_month = d.getMonth() + 1; //Months are zero based
+              var curr_year = d.getFullYear();
+              var finaldate = curr_year + "-" + curr_month + "-" + curr_day;
+              return d.toLocaleDateString()
+             }
+          },
             {
               data: null,
               render: function ( data, type, row ) {
-                return '<a class="btn btn-warning btn-sm m-2" data-bs-toggle="modal" data-bs-target="#viewProduct" title="View Order Details" id="'+data.id+'" onclick="edit_product(this)"><i class="bi bi-eye-fill"></i></a><a class="btn btn-danger btn-sm m-2" title="Cancel Order" id="'+data.id+'" onclick = "cancel_order(this)"><i class="bi bi-cart-x"></i></a>';
+                return `<a href="orders-details/${data.invoice}" class="btn btn-outline-info btn-sm m-2" title="View Order Details" id="${data.invoice}"><i class="bi bi-eye-fill"></i></a>`;
               }
             }
             // { "data": "salary" }
@@ -152,34 +146,105 @@
     } );
 
 
-  var add_product_form = document.getElementById("add_product_form");
-  add_product_form.addEventListener("submit",(e)=>{
-      e.preventDefault()
-      let productData = new FormData(add_product_form);
-      
-      const data = {}
-      productData.forEach((value, key) => (data[key] = value))
 
-      console.log(data)
 
-      fetch('/product/add-product', {
-        method: 'POST',
-        body: JSON.stringify(data),
-          }).then((res)=>{
-            console.log(res)
-            products_table.ajax.reload()
-            document.getElementById('product_title'). value = ""
-            document.getElementById('product_price'). value = ""
-            document.getElementById('product_qty'). value = ""
-            document.getElementById('product_description'). value = ""
-                if (res.redirected) {
-              window.location.href = res.url
+  function view_order(id){
+    console.log(id)
+    fetch('/orders/orders-details', {
+      method: 'POST',
+      body: JSON.stringify({'invoice':id})
+    })
+    .then(response => {
+      if (res.redirected) {
+        if (res.redirected) {
+            window.location.href = res.url
             }else{
+              response.json()
+           }  
+      }
+      
+    })
+    .then(data => console.log(data));
+
+    //  $('#order_detail_table').DataTable( {
+    //     dom: "QBftrip",
+    //     "bDestroy": true,
+    //     // "processing": true,
+    //     // "serverSide": true,
+    //     "ajax": {
+    //     "url": '/orders/orders-details',
+    //     "contentType": "application/json",
+    //     "type": "POST",
+    //     "data": function ( d ) {
+    //       return JSON.stringify( {"anon_user_id" : id} );
+    //        },
+    //     "dataSrc": "",
+    //     },
+    //     "columns": [
+    //         { "data": "id" },
+    //         {
+    //           data: null,
+    //           render: function ( data, type, row ) {
+    //             return `${data.last_name}, ${data.first_name} ${data.middle_name}`;
+    //           }
+    //         },
+    //         { "data": "address" },
+    //         { "data": "email_address" },
+    //         { "data": "contact_number" },
+    //       //  { "data": "order_qty" },
+    //         { "data": "order_status" },
+    //         {
+    //         data: null, 
+    //         render: function (data, type, row) { 
+    //           var d = new Date(data.timestamp);
+    //           var curr_day = d.getDate();
+    //           var curr_month = d.getMonth() + 1; //Months are zero based
+    //           var curr_year = d.getFullYear();
+    //           var finaldate = curr_year + "-" + curr_month + "-" + curr_day;
+    //           return d.toLocaleDateString()
+    //          }
+    //       },
+    //         {
+    //           data: null,
+    //           render: function ( data, type, row ) {
+    //             return `<a class="btn btn-outline-info btn-sm m-2" data-bs-toggle="modal" data-bs-target="#viewProduct" title="View Order Details" id="${data.anonymous_user_id}" onclick="view_order('${data.anonymous_user_id}')"><i class="bi bi-eye-fill"></i></a>`;
+    //           }
+    //         }
+    //         // { "data": "salary" }
+    //     ]
+    // } );
+
+
+  }
+
+  // var add_product_form = document.getElementById("add_product_form");
+  // add_product_form.addEventListener("submit",(e)=>{
+  //     e.preventDefault()
+  //     let productData = new FormData(add_product_form);
+      
+  //     const data = {}
+  //     productData.forEach((value, key) => (data[key] = value))
+
+  //     console.log(data)
+
+  //     fetch('/product/add-product', {
+  //       method: 'POST',
+  //       body: JSON.stringify(data),
+  //         }).then((res)=>{
+  //           console.log(res)
+  //           products_table.ajax.reload()
+  //           document.getElementById('product_title'). value = ""
+  //           document.getElementById('product_price'). value = ""
+  //           document.getElementById('product_qty'). value = ""
+  //           document.getElementById('product_description'). value = ""
+  //               if (res.redirected) {
+  //             window.location.href = res.url
+  //           }else{
               
-            }
-      })
+  //           }
+  //     })
     
-  })
+  // })
 
 
 

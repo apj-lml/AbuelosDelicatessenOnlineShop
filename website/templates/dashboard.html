@@ -13,7 +13,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <!-- <h2>Admin Page</h2> -->
           <ol>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="/dashboard">Home</a></li>
             <li>Dashboard</li>
           </ol>
         </div>
@@ -136,6 +136,118 @@
     </div>
   </div>
 </div>
+
+<!-- <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" id="showImages">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Product Images</h3>
+        <div class="modal-body container">
+          
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+    </div>
+  </div>
+</div> -->
+
+<!-- Modal -->
+<div class="modal fade" id="showImages" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="showImages">Product Images</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+            <!-- ======= Gallery Section ======= -->
+    <section id="gallery" class="gallery m-1 p-1">
+      <div class="container-fluid">
+
+        <div class="section-title">
+          <h2>Please <span>Note!</span></h2>
+          <p>Clicking the "X" on the thumbnail will delete the image permanently</p>
+        </div>
+
+        <div class="row no-gutters">
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="{{ url_for('static', filename = '/img/gallery/gallery-1.jpg') }}" class="gallery-lightbox">
+                <img src="{{ url_for('static', filename = '/img/gallery/gallery-1.jpg') }}" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="{{ url_for('static', filename = '/img/gallery/gallery-2.jpg') }}" class="gallery-lightbox">
+                <img src="{{ url_for('static', filename = '/img/gallery/gallery-2.jpg') }}" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="{{ url_for('static', filename = '/img/gallery/gallery-3.jpg') }}" class="gallery-lightbox">
+                <img src="{{ url_for('static', filename = '/img/gallery/gallery-3.jpg') }}" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="{{ url_for('static', filename = '/img/gallery/gallery-4.jpg') }}" class="gallery-lightbox">
+                <img src="{{ url_for('static', filename = '/img/gallery/gallery-4.jpg') }}" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="{{ url_for('static', filename = '/img/gallery/gallery-5.jpg') }}" class="gallery-lightbox">
+                <img src="{{ url_for('static', filename = '/img/gallery/gallery-5.jpg') }}" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="{{ url_for('static', filename = '/img/gallery/gallery-6.jpg') }}" class="gallery-lightbox">
+                <img src="{{ url_for('static', filename = '/img/gallery/gallery-6.jpg') }}" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="{{ url_for('static', filename = '/img/gallery/gallery-7.jpg') }}" class="gallery-lightbox">
+                <img src="{{ url_for('static', filename = '/img/gallery/gallery-7.jpg') }}" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="{{ url_for('static', filename = '/img/gallery/gallery-8.jpg') }}" class="gallery-lightbox">
+                <img src="{{ url_for('static', filename = '/img/gallery/gallery-8.jpg') }}" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Gallery Section -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+</div>
   {% endblock %}
 
   {%block jsperfile%}
@@ -214,7 +326,8 @@
             {
               data: null,
               render: function ( data, type, row ) {
-                return '<button class="btn btn-primary btn-sm" id="'+data.id+'">View</button>';
+                return `<a class="btn book-a-table-btn" data-bs-toggle="modal" data-bs-target="#showImages" onclick="show_images(${data.id})">Show</a>`
+               // return '<button class="btn btn-primary btn-sm" id="'+data.id+'">View</button>';
               }
             },
             {
@@ -227,7 +340,9 @@
         ]
     } );
 
-
+function show_images(id){
+  alert(id)
+}
   var add_product_form = document.getElementById("add_product_form");
   add_product_form.addEventListener("submit",(e)=>{
       e.preventDefault()

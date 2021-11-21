@@ -29,7 +29,7 @@ def allowed_file(filename):
 @login_required
 @admin_permission.require(http_exception=403)
 def add_product():
-    print("SOMETHING")
+
     if request.method == 'POST':
         #formdata = json.loads(request.data)
         formdata = request.form.to_dict()
@@ -87,19 +87,19 @@ def add_product():
         #return 'ok', 200
     return render_template('dashboard.html')
 
-@product.route('product-order', methods=['GET', 'POST'])
-@login_required
-@admin_permission.require(http_exception=403)
-def product_order():
+# @product.route('product-order', methods=['GET', 'POST'])
+# @login_required
+# @admin_permission.require(http_exception=403)
+# def product_order():
 
-    co = db.session.query(CustomerOrder, Product).filter(Link.product_id == Product.id, Link.order_id == CustomerOrder.id).all()
-    for x in co:
-        print ("Customer: {} Product: {}".format(x.CustomerOrder.last_name, x.Product.product_title))
-    if co:
-        print(co)
-    else:
-        print('----- NO CO SELECTED -----')
-    return 'ok', 200
+#     co = db.session.query(CustomerOrder, Product).filter(Link.product_id == Product.id, Link.order_id == CustomerOrder.id).all()
+#     for x in co:
+#         print ("Customer: {} Product: {}".format(x.CustomerOrder.last_name, x.Product.product_title))
+#     if co:
+#         print(co)
+#     else:
+#         print('----- NO CO SELECTED -----')
+#     return 'ok', 200
 
 @product.route('product-get', methods=['GET', 'POST'])
 # @login_required

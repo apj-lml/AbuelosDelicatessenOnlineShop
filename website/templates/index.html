@@ -89,7 +89,7 @@
 
 
         <div class="container text-center my-3">
-          <h2 class="font-weight-light">Prodcut Slide</h2>
+          <h2 class="font-weight-light">Product Slide</h2>
           <div class="row mx-auto my-auto justify-content-center">
               <div id="carouselExampleInterval" class="carousel slide carousel-dark" data-bs-ride="carousel">
                   <div class="carousel-inner" role="listbox" id="products_card">
@@ -137,23 +137,6 @@
 
         <div class="row menu-container" id="generate-menu">
 
-          <div class="col-lg-6 menu-item filter-others">
-            
-            <div class="menu-content">
-
-              <!-- <div class=""> -->
-                <a href="#">Crab Cake</a>
-                
-
-                
-                <span>$7.95</span>
-              <!-- </div> -->
-
-            </div>
-            <div class="menu-ingredients">
-              A delicate crab cake served on a toasted roll with lettuce and tartar sauce
-            </div>
-          </div>
 
         </div>
 
@@ -655,9 +638,6 @@
 
 
 $(document).ready(function(){
-
-
-
   fetch('/product/product-get', {
         method: 'GET',
           }).then(response => response.json())
@@ -688,16 +668,20 @@ $(document).ready(function(){
               document.getElementById('products_card').innerHTML += `
                       <div class="carousel-item active">
                           <div class="col-md-4 col-xs-4">
-                              <div class="card">
+                              <div class="card h-100">
                                   <div class="card-img">
                                       <img src="{{ url_for('static', filename = '/img/specials-1.jpg')}}" class="img-fluid">
                                   </div>
                                   <div class="card-body text-center">
                                     <h4 class="card-title">${product.product_title}</h4>
-                                    <p class ="card-text" ><small class=" text-muted">${product.product_description}</small></p>
-
-
-                                      <input type="number" class="form-control" id="product_qty_${product.id}" placeholder="Quantity" min ="1" value="1">
+                                    <p class ="card-text" ><small class="text-muted">${product.product_description}</small></p>
+                                    <div class="input-group mb-3  col-sm-12">
+                                      <h5 class="text-muted text-center col-sm-12">Php ${product.product_price}</h5>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                      <span class="input-group-text" id="basic-addon2">Qty</span>
+                                      <input type="number" class="form-control" id="product_qty_${product.id}" placeholder="Quantity" min ="1" max = "${product.product_qty}" value="1" aria-describedby="basic-addon2" onkeyup = "validate_qty(this.value, ${product.product_qty}, this)">
+                                    </div>
                                       <a javascript:void(0) class="book-a-table-btn" id="${product.id}" onclick="add_to_cart(this)"><i class="bi bi-eye"></i></a>
                                     <a javascript:void(0) class="book-a-table-btn" id="${product.id}" onclick="add_to_cart(this)"><i class="bi bi-cart-plus"></i></a>
                                   </div>
@@ -717,9 +701,13 @@ $(document).ready(function(){
                                   <div class="card-body text-center">
                                     <h4 class="card-title">${product.product_title}</h4>
                                     <p class ="card-text" ><small class=" text-muted">${product.product_description}</small></p>
-
-
-                                      <input type="number" class="form-control" id="product_qty_${product.id}" placeholder="Quantity" min ="1" value="1">
+                                      <div class="input-group mb-3  col-sm-12">
+                                        <h5 class="text-muted text-center col-sm-12">Php ${product.product_price}</h5>
+                                      </div>
+                                      <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon2">Qty</span>
+                                        <input type="text" class="form-control" id="product_qty_${product.id}" placeholder="Quantity" min ="1" max = "${product.product_qty}" value="1" aria-describedby="basic-addon2" onkeyup = "validate_qty(this.value, ${product.product_qty}, this)">
+                                      </div>
                                       <a javascript:void(0) class="book-a-table-btn" id="${product.id}" onclick="add_to_cart(this)"><i class="bi bi-eye"></i></a>
                                     <a javascript:void(0) class="book-a-table-btn" id="${product.id}" onclick="add_to_cart(this)"><i class="bi bi-cart-plus"></i></a>
                                   </div>
@@ -753,6 +741,15 @@ $(document).ready(function(){
 
    
 });
+
+function validate_qty(current_value, max_qty, e){
+
+  if(current_value > max_qty){
+    //alert(e.value)
+    document.getElementById(e.id).value = max_qty ;
+
+  }
+}
 
 function add_to_cart(e){
 

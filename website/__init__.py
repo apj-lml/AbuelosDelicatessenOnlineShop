@@ -58,13 +58,13 @@ def create_app():
 	return app
 
 def create_database(app):
-	if not path.exists('website/'+DB_NAME):
-		with app.app_context():
-			db.create_all()
-			from website.models import User
-			user = User.query.filter_by(email='admin@admin').first()
-			if not user:
-				admin_user = User(name = 'Aljohn Jacinto', email = 'admin@admin', password = generate_password_hash('admin'), last_name='admin', first_name = 'admin', middle_name = 'admin', name_extn = 'admin', address = 'admin', role = 'admin')
-				db.session.add(admin_user)
-				db.session.commit()
+	#if not path.exists('website/'+DB_NAME):
+	with app.app_context():
+		db.create_all()
+		from website.models import User
+		user = User.query.filter_by(email='admin@admin').first()
+		if not user:
+			admin_user = User(name = 'Aljohn Jacinto', email = 'admin@admin', password = generate_password_hash('admin'), last_name='admin', first_name = 'admin', middle_name = 'admin', name_extn = 'admin', address = 'admin', role = 'admin')
+			db.session.add(admin_user)
+			db.session.commit()
 		print('database created')

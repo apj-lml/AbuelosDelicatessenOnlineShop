@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %} Admin - Order Detail {%endblock%}
+{% block h1PageTitle %}<h5>Admin - Order Detail </h5>{% endblock %}
+
+{%block content%}
+<main id="main">
+        <!-- ======= Breadcrumbs Section ======= -->
+        <section class="breadcrumbs">
+            <div class="container">
+      
+              <div class="d-flex justify-content-between align-items-center">
+                <!-- <h2>Admin Page</h2> -->
+                <ol>
+                  <li><a href="/orders/">Orders</a></li>
+                  <li>Order Detail</li>
+                </ol>
+              </div>
+      
+            </div>
+          </section><!-- End Breadcrumbs Section -->
+          <section class="inner-page">
+            <div class="container">
+                <div class="row">
+                  <div class="col-md">
+                  <div class="table-responsive">
+                      {% if order_details %}
+                    <table id="order_detail_table" class="table table-striped align-middle" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Product Image</th>
+                                <th>Product</th>
+                                <!-- <th>Customer</th>
+                                <th>Delivery Address</th>
+                                <th>Email</th>
+                                <th>Contact #</th> -->
+                                <th>Order Qty</th>
+                                <th>Order Status</th>
+                                <th>Order Date</th>
+                                <th>Controls</th>
+                            </tr>
+                            {% for order_detail in order_details %}
+                                <tr>
+                                    <td><img src="{{ order_detail.Product.product_image[0].image_path }}" width="75" height="75"></td>
+                                    <td>{{ order_detail.Product.product_title }}</td>
+                                    <!-- <td>{{ order_detail.CustomerOrder.last_name }}, {{ order_detail.CustomerOrder.first_name }} {{ order_detail.CustomerOrder.middle_name }}</td>
+                                    <td>{{ order_detail.CustomerOrder.address }}</td>
+                                    <td>{{ order_detail.CustomerOrder.email_address }}</td>
+                                    <td>{{ order_detail.CustomerOrder.contact_number }}</td> -->
+                                    <td>{{ order_detail.CustomerOrder.order_qty }}</td>
+                                    <td>{{ order_detail.CustomerOrder.order_status }}</td>
+                                    <td>{{ order_detail.CustomerOrder.timestamp.strftime('%m-%d-%Y') }}</td>
+                                    <td><a href="/orders/orders-fulfillment/{{order_detail.CustomerOrder.id}}/Fulfilled" class="btn btn-outline-info btn-sm m-2" title="Fulfill Order"><i class="bi bi-check-lg"></i></a><a href="/orders/orders-fulfillment/{{order_detail.CustomerOrder.id}}/Canceled" class="btn btn-outline-danger btn-sm m-2" title="Cancel Order"><i class="bi bi-x-lg "></i></a></td>
+                                    
+                                
+                                </tr>
+                            {% endfor %}
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        </table>
+                        {% else %}
+                            <h1 class="text-muted">No Items</h1>
+                        {% endif %}
+                      </div>
+                  </div>
+                </div>
+            </div>
+          </section>
+</main>
+{%endblock%}

@@ -31,7 +31,7 @@ def add_cart():
 
     if request.method ==  "POST":
         session['anonymous_user_id'] = uuid.uuid4().hex
-        dictItems = {product_id:{'product_id':product.id, 'product_title':product.product_title, 'product_price': product.product_price, 'order_qty': order_qty}}
+        dictItems = {product_id:{'product_id':product.id, 'product_title':product.product_title, 'product_price': product.product_price, 'product_qty': product.product_qty, 'order_qty': order_qty}}
 
         if 'cart' in session:
             if product_id in session['cart']:
@@ -51,3 +51,9 @@ def add_cart():
             session['cart'] = dictItems
             return jsonify({})
 
+@carts.route('/remove-item/<id>', methods=['GET', 'POST'])
+def remove_item(id):
+    session['cart'].pop(id)
+    print(session['cart'])
+
+    return redirect(request.referrer)
