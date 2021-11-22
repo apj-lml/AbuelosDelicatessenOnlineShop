@@ -52,7 +52,7 @@ class Product(db.Model, SerializerMixin):
 	#customer_orders = db.relationship('CustomerOrder',secondary='link')
 	#customer_order = db.Column(db.Integer, db.ForeignKey('customer_order.id'))
 	
-class ProductImage(db.Model):
+class ProductImage(db.Model, SerializerMixin):
 	id = db.Column(db.Integer, primary_key = True)
 	image_path = db.Column(db.String(250))
 	file_name = db.Column(db.String(250))

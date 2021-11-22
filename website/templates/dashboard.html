@@ -3,6 +3,43 @@
 {% block title %} Admin Page {%endblock%}
 {% block h1PageTitle %}<h5>Admin Page </h5>{% endblock %}
 
+{%block cssperfile %}
+<style>
+  .btn-close{
+    z-index: 999;
+    /* right: 120px; */
+  }
+  .image-container {
+  width: 100%;
+  height: 150px;
+  position: relative;
+}
+.image-container img {
+  width: 100%;
+  height: 100%;
+}
+
+  .image-container .btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  /* background-color: #555; */
+  color: white;
+  /* font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px; */
+}
+
+.image-container .btn:hover {
+  background-color: black;
+}
+</style>
+{%endblock%}
+
 {%block content%}
   <main id="main">
 
@@ -63,8 +100,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="#" method="POST" id="add_product_form" enctype="multipart/form-data">
-        <input type="text" value="" id="add_or_update" name="add_or_update">
-        <input type="text" value="" id="product_id" name="product_id">
+        <input type="hidden" value="" id="add_or_update" name="add_or_update">
+        <input type="hidden" value="" id="product_id" name="product_id">
         <div class="modal-body container">
           <div class="row">
             <div class="col-md">
@@ -87,7 +124,7 @@
               <!-- <div class="d-sm-flex flex-row"> -->
                 <div class="form-group">
                   <label for="product_qty">Product Quantity</label>
-                  <input type="text" class="form-control" id="product_qty" name="product_qty">
+                  <input type="number" class="form-control" id="product_qty" name="product_qty">
                 </div>
               <!-- </div> -->
             </div>
@@ -98,7 +135,7 @@
                 <div class="form-group">
                   <label for="product_qty">Product Images</label>
                   <input type="file" class="form-control" id="product_images" name="product_images[]" multiple>
-                  <small>Max is three (3) images</small>
+                  <!-- <small>Max is three (3) images</small> -->
                 </div>
               <!-- </div> -->
             </div>
@@ -154,7 +191,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="showImages" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-xl">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="showImages">Product Images</h5>
@@ -165,85 +202,42 @@
     <section id="gallery" class="gallery m-1 p-1">
       <div class="container-fluid">
 
-        <div class="section-title">
+        <!-- <div class="section-title">
           <h2>Please <span>Note!</span></h2>
-          <p>Clicking the "X" on the thumbnail will delete the image permanently</p>
-        </div>
+          <p>Clicking the "XX" on the thumbnail will delete the image permanently</p>
+        </div> -->
 
-        <div class="row no-gutters">
+        <div class="row no-gutters" id="gallery_items">
 
-          <div class="col-lg-3 col-md-4">
+          <!-- <div class="col-lg-3 col-md-4 px-1">
             <div class="gallery-item">
               <a href="{{ url_for('static', filename = '/img/gallery/gallery-1.jpg') }}" class="gallery-lightbox">
-                <img src="{{ url_for('static', filename = '/img/gallery/gallery-1.jpg') }}" alt="" class="img-fluid">
+                <div class="image-container">
+                  <img src="{{ url_for('static', filename = '/img/gallery/gallery-1.jpg') }}" alt="" class="img-fluid">
+                  <button type="button" class="btn btn-sm-danger">Remove</button>
+                </div>
               </a>
             </div>
-          </div>
-
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
-              <a href="{{ url_for('static', filename = '/img/gallery/gallery-2.jpg') }}" class="gallery-lightbox">
-                <img src="{{ url_for('static', filename = '/img/gallery/gallery-2.jpg') }}" alt="" class="img-fluid">
-              </a>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
-              <a href="{{ url_for('static', filename = '/img/gallery/gallery-3.jpg') }}" class="gallery-lightbox">
-                <img src="{{ url_for('static', filename = '/img/gallery/gallery-3.jpg') }}" alt="" class="img-fluid">
-              </a>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
-              <a href="{{ url_for('static', filename = '/img/gallery/gallery-4.jpg') }}" class="gallery-lightbox">
-                <img src="{{ url_for('static', filename = '/img/gallery/gallery-4.jpg') }}" alt="" class="img-fluid">
-              </a>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
-              <a href="{{ url_for('static', filename = '/img/gallery/gallery-5.jpg') }}" class="gallery-lightbox">
-                <img src="{{ url_for('static', filename = '/img/gallery/gallery-5.jpg') }}" alt="" class="img-fluid">
-              </a>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
-              <a href="{{ url_for('static', filename = '/img/gallery/gallery-6.jpg') }}" class="gallery-lightbox">
-                <img src="{{ url_for('static', filename = '/img/gallery/gallery-6.jpg') }}" alt="" class="img-fluid">
-              </a>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
-              <a href="{{ url_for('static', filename = '/img/gallery/gallery-7.jpg') }}" class="gallery-lightbox">
-                <img src="{{ url_for('static', filename = '/img/gallery/gallery-7.jpg') }}" alt="" class="img-fluid">
-              </a>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
-              <a href="{{ url_for('static', filename = '/img/gallery/gallery-8.jpg') }}" class="gallery-lightbox">
-                <img src="{{ url_for('static', filename = '/img/gallery/gallery-8.jpg') }}" alt="" class="img-fluid">
-              </a>
-            </div>
-          </div>
-
+          </div> -->
+  
         </div>
 
       </div>
     </section><!-- End Gallery Section -->
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
+      <div class="modal-footer text-start">
+        <form action="#" method="POST" id="upload_new_images_form" enctype="multipart/form-data">
+          <input type="hidden" name="images_product_title" id="images_product_title">
+          <input type="hidden" name="images_product_id" id="images_product_id">
+          <div class="row me-auto float-start">
+            <div class="col-sm-8 text-start mb-2">
+                <input type="file" class="form-control" id="product_images" name="product_images[]" multiple>
+            </div>
+            <div class="col-sm-4 text-sm-center text-lg-left">
+              <button type="submit" class="btn btn-primary">Upload</button>
+            </div>
+          </div>
+      </form>
       </div>
     </div>
   </div>
@@ -341,8 +335,64 @@
     } );
 
 function show_images(id){
-  alert(id)
+  document.getElementById('gallery_items').innerHTML = "";
+  fetch('/product/product-get', {
+        method: 'POST',
+        body: JSON.stringify({"id": id}),
+          })
+          .then(response => response.json())
+          .then(data => {
+           // console.log(data.product_image)
+            document.getElementById('images_product_title').value = data.product_title;
+            document.getElementById('images_product_id').value = data.id;
+
+            data.product_image.forEach((currentValue, index, arr)=>{
+              console.log(currentValue.file_name)
+              document.getElementById('gallery_items').innerHTML += `
+              <div class="col-lg-3 col-md-4 px-1" id="g_item_${currentValue.id}">
+                <div class="gallery-item">
+                    <div class="image-container">
+                      <img src="/static/img/product_images/${currentValue.file_name}" alt="" class="img-fluid">
+                      <button type="button" class="btn btn-sm-danger" onclick="fade('g_item_${currentValue.id}', ${currentValue.id}, ${id});">Remove</button>
+                    </div>
+                </div>
+              </div>
+              `
+            })
+          });
 }
+
+function fade(id, image_id, product_id) {
+    var element = document.getElementById(id);
+    var op = 1;  // initial opacity
+    var timer = setInterval(function () {
+        if (op <= 0.1){
+            clearInterval(timer);
+            element.style.display = 'none';
+            remove_product_image(image_id, product_id)
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op -= op * 0.1;
+
+        
+
+    }, 20);
+}
+
+
+function remove_product_image(image_id, product_id){
+  fetch('/product/remove-product-images', {
+        method: 'POST',
+        body: JSON.stringify({'image_id': image_id}),
+          })
+          .then(response => response.json())
+          .then(resdata => {
+            show_images(product_id)
+              
+           })
+}
+
   var add_product_form = document.getElementById("add_product_form");
   add_product_form.addEventListener("submit",(e)=>{
       e.preventDefault()
@@ -374,7 +424,27 @@ function show_images(id){
     
   })
 
+  var upload_new_images_form = document.getElementById("upload_new_images_form");
+  upload_new_images_form.addEventListener("submit",(e)=>{
+      e.preventDefault()
+      let images = new FormData(upload_new_images_form);
+      
+      const data = {}
+      images.forEach((value, key) => (data[key] = value))
 
+      console.log(data)
+
+      fetch('/product/add-product-images', {
+        method: 'POST',
+        body: images,
+          })
+          .then(response => response.json())
+          .then(resdata => {
+            show_images(data.images_product_id)
+              
+           })
+    
+  })
 
 //} ); //dulo ng document load
 </script>

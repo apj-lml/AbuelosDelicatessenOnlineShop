@@ -25,6 +25,58 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@product.route('add-product-images', methods=['GET', 'POST'])
+@login_required
+@admin_permission.require(http_exception=403)
+def add_product_images():
+    
+    formdata = request.form.to_dict()
+    final_name = ''
+    items = request.files.getlist("product_images[]")
+
+    print(formdata)
+    for afile in items:
+        print(afile.filename)
+
+        if not afile and allowed_file(afile.filename):
+            print('Invalid file submitted')
+            return redirect(request.url)
+        else:
+            milliseconds = int(round(time.time() * 1000))
+            file_extension = afile.filename.rsplit('.', 1)[1].lower()
+            file_name = afile.filename.rsplit('.', 1)[0]
+            final_name = secure_filename(formdata['images_product_title'] +'_' + str(milliseconds) +'.'+file_extension)
+            print('file name: ', file_name)
+            if os.path.isfile(current_app.config['UPLOAD_FOLDER']):
+                print('path does not exist... creating path')
+                os.mkdir(current_app.config['UPLOAD_FOLDER'])
+            else:
+                print('path exist!')
+                afile.save(os.path.join(current_app.config['UPLOAD_FOLDER'], final_name))
+
+                #saving upload info to database
+                files_to_upload = ProductImage(image_path = '\\static\\img\\product_images\\'+final_name, file_name = final_name, product_id = formdata['images_product_id'])
+                db.session.add(files_to_upload)
+                db.session.commit()
+    return jsonify({})
+
+@product.route('remove-product-images', methods=['GET', 'POST'])
+@login_required
+@admin_permission.require(http_exception=403)
+def remove_product_images():
+
+    formdata = json.loads(request.data)
+    image_id = formdata['image_id']
+    product_image = ProductImage.query.get(image_id)
+    if product_image:
+        db.session.delete(product_image)
+        db.session.commit()
+        return jsonify({})
+    else:
+        print('deteltion failed')
+
+    return jsonify({})
+
 @product.route('add-product', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require(http_exception=403)
@@ -87,20 +139,6 @@ def add_product():
         #return 'ok', 200
     return render_template('dashboard.html')
 
-# @product.route('product-order', methods=['GET', 'POST'])
-# @login_required
-# @admin_permission.require(http_exception=403)
-# def product_order():
-
-#     co = db.session.query(CustomerOrder, Product).filter(Link.product_id == Product.id, Link.order_id == CustomerOrder.id).all()
-#     for x in co:
-#         print ("Customer: {} Product: {}".format(x.CustomerOrder.last_name, x.Product.product_title))
-#     if co:
-#         print(co)
-#     else:
-#         print('----- NO CO SELECTED -----')
-#     return 'ok', 200
-
 @product.route('product-get', methods=['GET', 'POST'])
 # @login_required
 # @admin_permission.require(http_exception=403)
@@ -140,7 +178,7 @@ def product_delete():
         db.session.commit()
         return jsonify({})
     else:
-        print('deteltion failed')
+        print('deletion failed')
 
     # print(products)
     # return jsonify({})
