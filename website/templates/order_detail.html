@@ -25,10 +25,11 @@
                   <div class="col-md">
                   <div class="table-responsive">
                       {% if order_details %}
-                    <table id="order_detail_table" class="table table-striped align-middle" style="width:100%">
+                    <table id="order_detail_table" class="table table-striped align-middle display" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Product Image</th>
+                                <th>Product ID</th>
                                 <th>Product</th>
                                 <!-- <th>Customer</th>
                                 <th>Delivery Address</th>
@@ -37,35 +38,113 @@
                                 <th>Order Qty</th>
                                 <th>Order Status</th>
                                 <th>Order Date</th>
+                                <th>Price</th>
+                                <th>Total</th>
                                 <th>Controls</th>
                             </tr>
-                            {% for order_detail in order_details %}
-                                <tr>
-                                    <td><img src="{{ order_detail.Product.product_image[0].image_path }}" width="75" height="75"></td>
-                                    <td>{{ order_detail.Product.product_title }}</td>
-                                    <!-- <td>{{ order_detail.CustomerOrder.last_name }}, {{ order_detail.CustomerOrder.first_name }} {{ order_detail.CustomerOrder.middle_name }}</td>
-                                    <td>{{ order_detail.CustomerOrder.address }}</td>
-                                    <td>{{ order_detail.CustomerOrder.email_address }}</td>
-                                    <td>{{ order_detail.CustomerOrder.contact_number }}</td> -->
-                                    <td>{{ order_detail.CustomerOrder.order_qty }}</td>
-                                    <td>{{ order_detail.CustomerOrder.order_status }}</td>
-                                    <td>{{ order_detail.CustomerOrder.timestamp.strftime('%m-%d-%Y') }}</td>
-                                    <td><a href="/orders/orders-fulfillment/{{order_detail.CustomerOrder.id}}/Fulfilled" class="btn btn-outline-info btn-sm m-2" title="Fulfill Order"><i class="bi bi-check-lg"></i></a><a href="/orders/orders-fulfillment/{{order_detail.CustomerOrder.id}}/Canceled" class="btn btn-outline-danger btn-sm m-2" title="Cancel Order"><i class="bi bi-x-lg "></i></a></td>
-                                    
-                                
-                                </tr>
-                            {% endfor %}
                         </thead>
                         <tbody>
+                          {% for order_detail in order_details %}
+                          <tr>
+                              <td><img src="{{ order_detail.Product.product_image[0].image_path }}" width="75" height="75"></td>
+                              <td>{{ order_detail.Product.id }}</td>
+                              <td>{{ order_detail.Product.product_title }}</td>
+                              <!-- <td>{{ order_detail.CustomerOrder.last_name }}, {{ order_detail.CustomerOrder.first_name }} {{ order_detail.CustomerOrder.middle_name }}</td>
+                              <td>{{ order_detail.CustomerOrder.address }}</td>
+                              <td>{{ order_detail.CustomerOrder.email_address }}</td>
+                              <td>{{ order_detail.CustomerOrder.contact_number }}</td> -->
+                              <td>{{ order_detail.CustomerOrder.order_qty }}</td>
+                              <td>{{ order_detail.CustomerOrder.order_status }}</td>
+                              <td>{{ order_detail.CustomerOrder.timestamp.strftime('%m-%d-%Y') }}</td>
+                              <td>{{ order_detail.Product.product_price }}</td>
+                              <td>{{ order_detail.CustomerOrder.order_qty|float * order_detail.Product.product_price|float }}</td>
+                              <td><a href="/orders/orders-fulfillment/{{order_detail.CustomerOrder.id}}/Fulfilled" class="btn btn-outline-info btn-sm m-2" title="Fulfill Order"><i class="bi bi-check-lg"></i></a><a href="/orders/orders-fulfillment/{{order_detail.CustomerOrder.id}}/Canceled" class="btn btn-outline-danger btn-sm m-2" title="Cancel Order"><i class="bi bi-x-lg "></i></a></td>
+                              
+                          
+                          </tr>
+                      {% endfor %}
                         </tbody>
+                        <tfoot>
+                          <tr>
+                              <th colspan="7" style="text-align:right">Total:</th>
+                              <th></th>
+                          </tr>
+                      </tfoot>
                         </table>
-                        {% else %}
+                        <!-- {% else %}
                             <h1 class="text-muted">No Items</h1>
-                        {% endif %}
+                        {% endif %} -->
                       </div>
                   </div>
                 </div>
             </div>
           </section>
 </main>
+
+{%endblock%}
+
+{%block jsperfile%}
+<script type="text/javascript">
+  var order_detail_table = $('#order_detail_table').DataTable( {
+    dom: 'QBfrtip',
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        buttons: [
+            {
+                extend: 'copyHtml5',
+                footer: true,
+                exportOptions: {
+                    columns: [ 1, 2, 3, 4, 5, 6, 7 ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                footer: true,
+                exportOptions: {
+                    columns: [ 1, 2, 3, 4, 5, 6, 7 ]
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                footer: true,
+                exportOptions: {
+                    columns: [ 1, 2, 3, 4, 5, 6, 7 ]
+                }
+            },
+            'colvis'
+        ],
+           "footerCallback": function ( row, data, start, end, display ) {
+                var api = this.api(), data;
+    
+                // Remove the formatting to get integer data for summation
+                var intVal = function ( i ) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '')*1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+    
+                // Total over all pages
+                total = api
+                    .column( 6 )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+    
+                // Total over this page
+                pageTotal = api
+                    .column( 6, { page: 'current'} )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+    
+                // Update footer
+                $( api.column( 4 ).footer() ).html(
+                    'Php '+pageTotal +' (Grand Total Php '+ total +')'
+                );
+            }
+
+} );
+</script>
 {%endblock%}

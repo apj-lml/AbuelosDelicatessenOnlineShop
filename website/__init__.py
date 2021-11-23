@@ -14,7 +14,11 @@ UPLOAD_FOLDER = os.path.join(APP_ROOT, 'static', 'img/product_images/')
 def create_app():
 	app = Flask(__name__)
 	app.config['SECRET_KEY'] = 'random secret key xyz 123'
+	#sqlite
 	app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+	#mysql
+	#app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://root:password123@localhost/{DB_NAME}'
+
 	app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 	db.init_app(app)
 	

@@ -147,23 +147,28 @@ def product_get():
     #products = Product.as_dict(Product.query().all())
     if request.method == 'GET':
         products = db.session.query(Product).all()
-        column_keys = Product.__table__.columns.keys()
-    # Temporary dictionary to keep the return value from table
+    #     column_keys = Product.__table__.columns.keys()
+    # # Temporary dictionary to keep the return value from table
         rows_dic_temp = {}
         rows_dic = []
-    # Iterate through the returned output data set
-        for row in products:
-            for col in column_keys:
-                rows_dic_temp[col] = getattr(row, col)
-            rows_dic.append(rows_dic_temp)
-            rows_dic_temp= {}
+    # # Iterate through the returned output data set
+    #     for row in products:
+    #         for col in column_keys:
+    #             rows_dic_temp[col] = getattr(row, col)
+    #         rows_dic.append(rows_dic_temp)
+    #         rows_dic_temp= {}
+
+        for item in products:
+            #print(item.to_dict())
+            rows_dic.append(item.to_dict())
+        #result = products.to_dict()
         return jsonify(rows_dic)
     else:
         formdata = json.loads(request.data)
         product_id = formdata['id']
         products = Product.query.get(product_id)
         result = products.to_dict()
-        print(result)
+       # print(result)
         return jsonify(result)
 
 @product.route('product-delete', methods=['GET', 'POST'])
