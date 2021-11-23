@@ -95,8 +95,10 @@
        {% if current_user.is_authenticated %} 
         {% block h1PageTitle %} {% endblock %}
        {% else %}
-      <i class="bi bi-phone d-flex align-items-center"><span>+1 5589 55488 55</span></i>
-      <i class="bi bi-clock ms-4 d-none d-lg-flex align-items-center"><span>Mon-Sat: 11:00 AM - 23:00 PM</span></i>
+      <i class="bi bi-phone d-flex align-items-center"><span>+63915-560-0480</span></i>
+      <i class="bi bi-facebook ms-4 d-none d-lg-flex align-items-center"><span>facebook.com/abuelosdeli</span></i>
+      <i class="bi bi-instagram ms-4 d-none d-lg-flex align-items-center"><span>instagram.com/abuelosdeli</span></i>
+
       {% endif %}
     </div>
   </section>
@@ -126,12 +128,12 @@
           {% else %}
           <li><a class="nav-link scrollto active" href="/">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#menu">Menu</a></li>
+          <li><a class="nav-link scrollto" href="#menu">Our Products</a></li>
           <li><a class="nav-link scrollto" href="#specials">Specials</a></li>
-          <li><a class="nav-link scrollto" href="#events">Events</a></li>
-          <li><a class="nav-link scrollto" href="#chefs">Chefs</a></li>
+          <!-- <li><a class="nav-link scrollto" href="#events">Events</a></li>
+          <li><a class="nav-link scrollto" href="#chefs">Chefs</a></li> -->
           <li><a class="nav-link scrollto" href="#gallery">Gallery</a></li>
-          <li class="dropdown">
+          <!-- <li class="dropdown">
             <a href="#"><span>Drop Down</span><i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>
@@ -148,7 +150,7 @@
               <li><a href="#">Drop Down 3</a></li>
               <li><a href="#">Drop Down 4</a></li>
             </ul>
-          </li>
+          </li> -->
           <li>
             <a class="nav-link" href="/carts/view-cart">Cart<i class="bi bi-cart"></i></a>
           </li>
@@ -181,8 +183,8 @@
                 <h2 class="animate__animated animate__fadeInDown">Abuelo's Delicatessen</h2>
                 <p class="animate__animated animate__fadeInUp"></p>
                 <div>
-                  <a href="#menu" class="btn-menu animate__animated animate__fadeInUp scrollto">Our Menu</a>
-                  <a href="#book-a-table" class="btn-book animate__animated animate__fadeInUp scrollto">Book a Table</a>
+                  <a href="#menu" class="btn-menu animate__animated animate__fadeInUp scrollto">Our Products</a>
+                  <!-- <a href="#book-a-table" class="btn-book animate__animated animate__fadeInUp scrollto">Book a Table</a> -->
                 </div>
               </div>
             </div>
@@ -192,11 +194,11 @@
           <div class="carousel-item" style="background: url({{ url_for('static', filename = '/img/slide/slide-2.jpg' )}});">
             <div class="carousel-container">
               <div class="carousel-content">
-                <h2 class="animate__animated animate__fadeInDown">Lorem Ipsum Dolor</h2>
+                <h2 class="animate__animated animate__fadeInDown">Abuelo's Delicatessen</h2>
                 <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
                 <div>
-                  <a href="#menu" class="btn-menu animate__animated animate__fadeInUp scrollto">Our Menu</a>
-                  <a href="#book-a-table" class="btn-book animate__animated animate__fadeInUp scrollto">Book a Table</a>
+                  <a href="#menu" class="btn-menu animate__animated animate__fadeInUp scrollto">Our Products</a>
+                  <!-- <a href="#book-a-table" class="btn-book animate__animated animate__fadeInUp scrollto">Book a Table</a> -->
                 </div>
               </div>
             </div>
@@ -208,11 +210,11 @@
               <img src="{{ url_for('static', filename = '/img/slide/slide-3.jpg' ) }}" alt=""></div>
             <div class="carousel-container">
               <div class="carousel-content">
-                <h2 class="animate__animated animate__fadeInDown">Sequi ea ut et est quaerat</h2>
+                <h2 class="animate__animated animate__fadeInDown">Abuelo's Delicatessen</h2>
                 <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
                 <div>
-                  <a href="#menu" class="btn-menu animate__animated animate__fadeInUp scrollto">Our Menu</a>
-                  <a href="#book-a-table" class="btn-book animate__animated animate__fadeInUp scrollto">Book a Table</a>
+                  <a href="#menu" class="btn-menu animate__animated animate__fadeInUp scrollto">Our Products</a>
+                  <!-- <a href="#book-a-table" class="btn-book animate__animated animate__fadeInUp scrollto">Book a Table</a> -->
                 </div>
               </div>
             </div>
@@ -235,9 +237,9 @@
   {%block content%} {%endblock%}
 
   <!-- ======= Footer ======= -->
-  <footer id="footer">
+  <footer id="footer" class="mt-5">
     <div class="container">
-      <h3>Delicious</h3>
+      <h3>Abuelo's Delicatessen</h3>
       <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi placeat.</p>
       <div class="social-links">
         <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>

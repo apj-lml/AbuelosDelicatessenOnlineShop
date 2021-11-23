@@ -12,62 +12,17 @@
   height: 100%;
 }
 
-.quantity {
- display: inline-block; }
-
-.quantity .input-text.qty {
- width: 35px;
- height: 39px;
- padding: 0;
- margin: 0;
- text-align: center;
- background-color: transparent;
- border: 1px solid #efefef;
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-.quantity.buttons_added {
- text-align: left;
- position: relative;
- white-space: nowrap;
- vertical-align: top; }
-
-.quantity.buttons_added input {
- display: inline-block;
- margin: 0;
- padding: 0;
- vertical-align: top;
- box-shadow: none;
+/* Firefox */
+.qty-input {
+  -moz-appearance: textfield;
+  text-align: center;
 }
-
-.quantity.buttons_added .minus,
-.quantity.buttons_added .plus {
-margin: 0;
- padding: 7px 10px 8px;
- height: 41px;
- background-color: #ffffff;
- border: 1px solid #efefef;
- cursor:pointer;}
-
-.quantity.buttons_added .minus {
- border-right: 0; }
-
-.quantity.buttons_added .plus {
- border-left: 0; }
-
-.quantity.buttons_added .minus:hover,
-.quantity.buttons_added .plus:hover {
- background: #eeeeee; }
-
-.quantity input::-webkit-outer-spin-button,
-.quantity input::-webkit-inner-spin-button {
- -webkit-appearance: none;
- -moz-appearance: none;
- margin: 0; }
- 
- .quantity.buttons_added .minus:focus,
-.quantity.buttons_added .plus:focus {
- outline: none; }
-
 
 </style>
 {%endblock%}
@@ -80,13 +35,13 @@ margin: 0;
         <div class="row">
 
           <div class="col-lg-5 align-items-stretch video-box" style="background-image: url( {{ url_for('static', filename='/img/about.jpg') }});">
-            <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>
+            <!-- <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a> -->
           </div>
 
           <div class="col-lg-7 d-flex flex-column justify-content-center align-items-stretch">
 
             <div class="content">
-              <h3>Eum ipsam laborum deleniti <strong>velit pariatur architecto aut nihil</strong></h3>
+              <h3>Welcome to our<strong> Store</strong></h3>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
               </p>
@@ -119,7 +74,7 @@ margin: 0;
 
         <div class="section-title">
           <h2>Why choose <span>Our Store?</span></h2>
-          <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
+          <!-- <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p> -->
         </div>
 
         <div class="row">
@@ -136,7 +91,7 @@ margin: 0;
             <div class="box">
               <span>02</span>
               <h4>Premium</h4>
-              <p>Premium experience with the right price.</p>
+              <p>Premium experience with affordable price.</p>
             </div>
           </div>
 
@@ -144,7 +99,7 @@ margin: 0;
             <div class="box">
               <span>03</span>
               <h4>Delivery</h4>
-              <p>Fast Delivery within Metro Manila</p>
+              <p>Fast delivery within Metro Manila</p>
             </div>
           </div>
 
@@ -161,7 +116,7 @@ margin: 0;
       <div class="container">
 
         <div class="section-title">
-          <h2>Our Product<span> Pricing</span></h2>
+          <h2>Our <span>Products</span></h2>
         </div>
 
         <div class="row">
@@ -184,9 +139,11 @@ margin: 0;
     </section><!-- End Menu Section -->
 
     <!-- ======= Product Slide Section ======= -->
-    <section>
+    <section class="menu">
         <div class="container text-center my-3">
-          <h2 class="font-weight-light">Product Slide</h2>
+          <div class="section-title">
+            <h2>Fresh <span>Stocks!</span></h2>
+          </div>
           <div class="row mx-auto my-auto justify-content-center">
               <div id="carouselExampleInterval" class="carousel slide carousel-dark" data-bs-ride="carousel">
                   <div class="carousel-inner" role="listbox" id="products_card">
@@ -313,7 +270,7 @@ margin: 0;
 
 
     <!-- ======= Book A Table Section ======= -->
-    <section id="book-a-table" class="book-a-table">
+    <!-- <section id="book-a-table" class="book-a-table">
       <div class="container">
 
         <div class="section-title">
@@ -361,14 +318,15 @@ margin: 0;
         </form>
 
       </div>
-    </section><!-- End Book A Table Section -->
+    </section> -->
+    <!-- End Book A Table Section -->
 
     <!-- ======= Gallery Section ======= -->
     <section id="gallery" class="gallery">
       <div class="container-fluid">
 
         <div class="section-title">
-          <h2>Some photos from <span>Our Restaurant</span></h2>
+          <h2>Some photos from <span>Our Store</span></h2>
           <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
         </div>
 
@@ -541,12 +499,12 @@ margin: 0;
     <!-- End Testimonials Section -->
 
     <!-- ======= Contact Section ======= -->
-    <!-- <section id="contact" class="contact">
+    <section id="contact" class="contact">
       <div class="container">
 
         <div class="section-title">
           <h2><span>Contact</span> Us</h2>
-          <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
+          <p>Reach us and visit our Store!</p>
         </div>
       </div>
 
@@ -561,30 +519,32 @@ margin: 0;
             <div class="col-lg-3 col-md-6 info">
               <i class="bi bi-geo-alt"></i>
               <h4>Location:</h4>
-              <p>A108 Adam Street<br>New York, NY 535022</p>
+              <p>Your address here</p>
             </div>
 
             <div class="col-lg-3 col-md-6 info mt-4 mt-lg-0">
-              <i class="bi bi-clock"></i>
-              <h4>Open Hours:</h4>
-              <p>Monday-Saturday:<br>11:00 AM - 2300 PM</p>
+              <i class="bi bi-facebook"></i>
+              <h4>FB Page:</h4>
+              <p>facebook.com/abuelosdeli</p>
+              
             </div>
 
             <div class="col-lg-3 col-md-6 info mt-4 mt-lg-0">
-              <i class="bi bi-envelope"></i>
-              <h4>Email:</h4>
-              <p>info@example.com<br>contact@example.com</p>
+              <i class="bi bi-instagram"></i>
+              <h4>Instagram:</h4>
+              <p>instagram.com/abuelosdeli</p>
+             
             </div>
 
             <div class="col-lg-3 col-md-6 info mt-4 mt-lg-0">
               <i class="bi bi-phone"></i>
               <h4>Call:</h4>
-              <p>+1 5589 55488 51<br>+1 5589 22475 14</p>
+              <p>+63915-560-0480</p>
             </div>
           </div>
         </div>
 
-        <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+        <!-- <form action="forms/contact.php" method="post" role="form" class="php-email-form">
           <div class="row">
             <div class="col-md-6 form-group">
               <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
@@ -605,10 +565,10 @@ margin: 0;
             <div class="sent-message">Your message has been sent. Thank you!</div>
           </div>
           <div class="text-center"><button type="submit">Send Message</button></div>
-        </form>
+        </form> -->
 
       </div>
-    </section> -->
+    </section>
     <!-- End Contact Section -->
 
   </main><!-- End #main -->
@@ -639,13 +599,28 @@ margin: 0;
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="view_item" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="showImages">Product Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="view_item_content_body">
+
+      </div>
+      <div class="modal-footer" id="view_item_content_footer">
+
+      </div>
+    </div>
+  </div>
+</div>
 {%endblock%}
 
 {%block jsperfile%}
 <script type="text/javascript">
-
-
-
 
 $(document).ready(function(){
   fetch('/product/product-get', {
@@ -689,16 +664,18 @@ $(document).ready(function(){
                                       <h5 class="text-muted text-center col-sm-12">Php ${product.product_price}</h5>
                                     </div>
                                     <div class="input-group mb-3">
-                                      <span class="input-group-text" id="basic-addon2">Qty</span>
-                                      <input type="number" class="form-control" id="product_qty_${product.id}" placeholder="Quantity" min ="1" max = "${product.product_qty}" value="1" aria-describedby="basic-addon2" onkeyup = "validate_qty(this.value, ${product.product_qty}, this)">
-                                    </div>
-                                    <div class="quantity buttons_added">
-                                      <input type="button" value="-" class="minus">
-                                        <input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="" inputmode="">
-                                      <input type="button" value="+" class="plus">
-                                    </div>
-                                      <a javascript:void(0) class="book-a-table-btn" id="${product.id}" onclick="add_to_cart(this)"><i class="bi bi-eye"></i></a>
-                                    <a javascript:void(0) class="book-a-table-btn" id="${product.id}" onclick="add_to_cart(this)"><i class="bi bi-cart-plus"></i></a>
+                                        
+                                      <div class="btn-group btn-group-sm mx-auto">
+                                          <button type="button" class="btn btn btn-outline-secondary btn-sm" id="minus" onclick="document.getElementById('product_qty_${product.id}').value --; validate_qty(document.getElementById('product_qty_${product.id}').value, ${product.product_qty}, document.getElementById('product_qty_${product.id}'))">-</button>
+                                            <div class="input-group-btn">
+                                              <input type="number" class="form-control qty-input" id="product_qty_${product.id}" placeholder="Quantity" style="border-radius: 0;" min ="1" max = "${product.product_qty}" value="1" onkeyup = "validate_qty(this.value, ${product.product_qty}, this)" onchange="validate_qty(this.value, ${product.product_qty}, this)">
+                                            </div>
+                                          <button type="button" class="btn btn btn-outline-secondary btn-sm" id="plus" onclick="document.getElementById('product_qty_${product.id}').value ++; validate_qty(document.getElementById('product_qty_${product.id}').value, ${product.product_qty}, document.getElementById('product_qty_${product.id}'))">+</button>
+                                        </div>
+
+                                      </div>
+                                      <a javascript:void(0) class="book-a-table-btn mx-auto" id="view_item_${product.id}" data-bs-toggle="modal" data-bs-target="#view_item" onclick="view_item(this.id, ${product.id})"><i class="bi bi-eye"></i></a>
+                                    <a javascript:void(0) class="book-a-table-btn mx-auto" id="${product.id}" onclick="add_to_cart(this, document.getElementById('product_qty_${product.id}').value)"><i class="bi bi-cart-plus"></i></a>
                                   </div>
                               </div>
                           </div>
@@ -721,17 +698,17 @@ $(document).ready(function(){
                                       </div>
                                       <div class="input-group mb-3">
                                         
-                                        <div class="btn-group btn-group-sm">
-                                          <button type="button" class="btn btn btn-outline-secondary btn-sm" id="plus">-</button>
+                                        <div class="btn-group btn-group-sm mx-auto">
+                                          <button type="button" class="btn btn btn-outline-secondary btn-sm" id="minus" onclick="document.getElementById('product_qty_${product.id}').value --; validate_qty(document.getElementById('product_qty_${product.id}').value, ${product.product_qty}, document.getElementById('product_qty_${product.id}'))">-</button>
                                             <div class="input-group-btn">
-                                              <input type="number" class="form-control" id="product_qty_${product.id}" placeholder="Quantity" style="border-radius: 0;" min ="1" max = "${product.product_qty}" value="1" onkeyup = "validate_qty(this.value, ${product.product_qty}, this)" onchange="validate_qty(this.value, ${product.product_qty}, this)">
+                                              <input type="number" class="form-control qty-input" id="product_qty_${product.id}" placeholder="Quantity" style="border-radius: 0;" min ="1" max = "${product.product_qty}" value="1" onkeyup = "validate_qty(this.value, ${product.product_qty}, this)" onchange="validate_qty(this.value, ${product.product_qty}, this)">
                                             </div>
-                                          <button type="button" class="btn btn btn-outline-secondary btn-sm" id="minus" onclick="document.getElementById('product_qty_${product.id}').value ++; validate_qty(this.value, ${product.product_qty}, this)">+</button>
+                                          <button type="button" class="btn btn btn-outline-secondary btn-sm" id="plus" onclick="document.getElementById('product_qty_${product.id}').value ++; validate_qty(document.getElementById('product_qty_${product.id}').value, ${product.product_qty}, document.getElementById('product_qty_${product.id}'))">+</button>
                                         </div>
 
                                       </div>
-                                      <a javascript:void(0) class="book-a-table-btn" id="${product.id}" onclick="add_to_cart(this)"><i class="bi bi-eye"></i></a>
-                                    <a javascript:void(0) class="book-a-table-btn" id="${product.id}" onclick="add_to_cart(this)"><i class="bi bi-cart-plus"></i></a>
+                                      <a javascript:void(0) class="book-a-table-btn  mx-auto" id="view_item_${product.id}" data-bs-toggle="modal" data-bs-target="#view_item" onclick="view_item(this.id, ${product.id})"><i class="bi bi-eye"></i></a>
+                                    <a javascript:void(0) class="book-a-table-btn  mx-auto" id="${product.id}" onclick="add_to_cart(this, document.getElementById('product_qty_${product.id}').value)"><i class="bi bi-cart-plus"></i></a>
                                   </div>
                               </div>
                           </div>
@@ -748,7 +725,6 @@ $(document).ready(function(){
               let next = el.nextElementSibling
               for (var i=1; i<minPerSlide; i++) {
                   if (!next) {
-                      // wrap carousel by using first child
                       next = items[0]
                   }
                   let cloneChild = next.cloneNode(true)
@@ -760,37 +736,99 @@ $(document).ready(function(){
    
 });
 
-function add_minus_qty(el_id){
+function view_item(e_id, p_id){
+  fetch('/product/product-get', {
+        method: 'POST',
+        body: JSON.stringify({"id":p_id}),
+          }).then(response => response.json())
 
+          .then(product => {
+            var card_carousel = "";
+            var carousel_active = "active"
+            var counter = 1;
+
+            product.product_image.forEach(images =>  {
+              if (counter <= 1){
+              carousel_active = "active"
+              }else{
+                carousel_active = ""
+              }
+               card_carousel += `
+             
+               <div class="carousel-item ${carousel_active}">
+                 <img src="/static/img/product_images/${images.file_name}" class="d-block w-100" alt="https://via.placeholder.com/400">
+                 <div class="carousel-caption d-none d-md-block">
+                   <h3>${product.product_title}</h3>
+                   <p class="card-text">${product.product_description}</p>
+                 </div>
+               </div>
+               `
+               counter += 1
+             });
+
+        document.getElementById('view_item_content_body').innerHTML = `
+         <div class="card">
+           <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+
+             
+             <div class="carousel-inner">
+              ${card_carousel}
+             </div>
+             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+               <span class="visually-hidden">Previous</span>
+             </button>
+             <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+               <span class="carousel-control-next-icon" aria-hidden="true"></span>
+               <span class="visually-hidden">Next</span>
+             </button>
+           </div>
+           <div class="card-body">
+             <h5 class="card-title"><strong>Php ${product.product_price}</strong></h5>
+             <p class="card-text"><span class="text-muted">Stock Available: ${product.product_qty}</span></p>
+             <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+           </div>
+         </div>
+ 
+       </div>`;
+
+
+      document.getElementById('view_item_content_footer').innerHTML = `
+         <div class="btn-group btn-group-sm mx-auto">
+          <button type="button" class="btn btn btn-outline-secondary btn-sm" id="minus" onclick="document.getElementById('view_product_qty_${product.id}').value --; validate_qty(document.getElementById('view_product_qty_${product.id}').value, ${product.product_qty}, document.getElementById('view_product_qty_${product.id}'))">-</button>
+            <div class="input-group-btn">
+              <input type="number" class="form-control qty-input" id="view_product_qty_${product.id}" placeholder="Quantity" style="border-radius: 0;" min ="1" max = "${product.product_qty}" value="1" onkeyup = "validate_qty(this.value, ${product.product_qty}, this)" onchange="validate_qty(this.value, ${product.product_qty}, this)">
+            </div>
+          <button type="button" class="btn btn btn-outline-secondary btn-sm" id="plus" onclick="document.getElementById('view_product_qty_${product.id}').value ++; validate_qty(document.getElementById('view_product_qty_${product.id}').value, ${product.product_qty}, document.getElementById('view_product_qty_${product.id}'))">+</button>
+        </div>
+        <a javascript:void(0) class="book-a-table-btn  mx-auto" id="${product.id}" onclick="add_to_cart(this, document.getElementById('view_product_qty_${product.id}').value)"><i class="bi bi-cart-plus"></i></a>
+
+
+         `;
+           })
 }
 
 function validate_qty(current_value, max_qty, e){
 
   if(current_value > max_qty){
-    //alert(e.value)
     document.getElementById(e.id).value = max_qty ;
 
+  }else if(current_value<=0){
+    document.getElementById(e.id).value = 1;
   }
 }
 
-function add_to_cart(e){
-
-  //alert(e.id);
-
-  var quantity = document.getElementById("product_qty_"+e.id).value;
+function add_to_cart(e_id, quantity){
+  //var quantity = document.getElementById("product_qty_"+e.id).value;
+  alert(e_id.id)
   console.log(quantity)
   fetch('/carts/add-cart', {
         method: 'POST',
-        body: JSON.stringify({"product_id":e.id, "order_qty":quantity}),
-          }).then((res)=>{
-            console.log(res)
-                if (res.redirected) {
-              window.location.href = res.url
-            }else{
-
-            }
-      })
-
+        body: JSON.stringify({"product_id":e_id.id, "order_qty":quantity}),
+          }).then((res)=> res.json())
+          .then((data)=>{
+            console.log(data)
+          })
 }
 
   var login_form = document.getElementById("login_form")

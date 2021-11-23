@@ -8,6 +8,8 @@ from flask_principal import identity_loaded, Principal, UserNeed, RoleNeed
 
 db = SQLAlchemy()
 DB_NAME = 'abuelosdelicatessen_database.db'
+#DB_NAME = 'abuelosdelicatessen_database'
+
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = os.path.join(APP_ROOT, 'static', 'img/product_images/')
 
@@ -16,8 +18,9 @@ def create_app():
 	app.config['SECRET_KEY'] = 'random secret key xyz 123'
 	#sqlite
 	app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+	
 	#mysql
-	#app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://root:password123@localhost/{DB_NAME}'
+	#app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://root:rootpassword@localhost/{DB_NAME}'
 
 	app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 	db.init_app(app)

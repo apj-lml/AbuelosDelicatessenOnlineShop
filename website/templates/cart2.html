@@ -51,14 +51,23 @@
                             </div> -->
                             <div>
                             <a href="/carts/remove-item/{{product.product_id}}" type="button" id="{{product.product_id}}" class="btn-close position-absolute top-0 start-100 p-2" title = "Remove from cart" aria-label="Close"></a>
-                              <h6 class="my-0">{{product.product_title}}</h6>
-                             <small class="text-muted" >x{{product.order_qty}}</small>
+                              
+                              <div class="row mb-2">
+                                <div class="col-sm-6">
+                                  <h6 class="my-0">{{product.product_title}}</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                  <span class="text-muted">PHP {{product.product_price}}</span>
+                                </div>
+                              </div>
+                             <!-- <small class="text-muted" >x{{product.order_qty}}</small> -->
+                             
                               <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon2">Qty</span>
                                 <input type="number" class="form-control" id="product_qty_{{product.id}}" placeholder="Quantity" min ="1" aria-describedby="basic-addon2" value="{{product.order_qty}}">
                               </div>
                           </div>
-                          <span class="text-muted">PHP {{product.product_price}}</span>
+                          
                         </li>
                         {% set grandtotal.value = grandtotal.value + product.product_price|int * product.order_qty|int %}
                         {% endfor %}
