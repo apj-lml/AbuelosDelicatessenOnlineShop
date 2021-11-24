@@ -27,12 +27,12 @@
 {%endblock%}
 
 {%block content%}
- <div class="container mb-5">
-    <main>
-        <div class="py-5 text-center">
-          <img class="d-block mx-auto mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-          <h2>Checkout Form</h2>
-          <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+ <div class="container mt-5">
+    <main class="mt-5">
+        <div class="py-5 text-center mt-5">
+          <!-- <img class="d-block mx-auto mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
+          <h2 class="mt-5">Checkout</h2>
+          <!-- <p class="lead"></p> -->
         </div>
     
         <div class="row g-5">
@@ -64,7 +64,7 @@
                              
                               <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon2">Qty</span>
-                                <input type="number" class="form-control" id="product_qty_{{product.id}}" placeholder="Quantity" min ="1" aria-describedby="basic-addon2" value="{{product.order_qty}}">
+                                <input disabled type="number" class="form-control" id="product_qty_{{product.id}}" placeholder="Quantity" min ="1" aria-describedby="basic-addon2" value="{{product.order_qty}}">
                               </div>
                           </div>
                           
