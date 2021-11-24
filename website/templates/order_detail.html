@@ -71,9 +71,9 @@
                           </tr>
                       </tfoot>
                         </table>
-                        <!-- {% else %}
+                       {% else %}
                             <h1 class="text-muted">No Items</h1>
-                        {% endif %} -->
+                        {% endif %}
                       </div>
                   </div>
                 </div>
@@ -91,21 +91,21 @@
         buttons: [
             {
                 extend: 'copyHtml5',
-                footer: true,
+                // footer: true,
                 exportOptions: {
                     columns: [ 1, 2, 3, 4, 5, 6, 7 ]
                 }
             },
             {
                 extend: 'excelHtml5',
-                footer: true,
+                // footer: true,
                 exportOptions: {
                     columns: [ 1, 2, 3, 4, 5, 6, 7 ]
                 }
             },
             {
                 extend: 'pdfHtml5',
-                footer: true,
+                // footer: true,
                 exportOptions: {
                     columns: [ 1, 2, 3, 4, 5, 6, 7 ]
                 }
@@ -141,7 +141,7 @@
     
                 // Update footer
                 $( api.column( 4 ).footer() ).html(
-                    'Php '+pageTotal +' (Grand Total Php '+ total +')'
+                    'Page Total: Php '+pageTotal +' | Grand Total: Php '+ total
                 );
             }
 

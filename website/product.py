@@ -1,9 +1,7 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify, current_app, session, Response
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify, current_app, session
 from werkzeug.utils import secure_filename
-from flask_login import current_user, login_user, logout_user, login_required
-from datetime import datetime, date
-from .models import Product, CustomerOrder, ProductImage
+from flask_login import current_user, login_required
+from .models import Product, ProductImage
 from . import db
 import os, os.path
 import json
@@ -11,7 +9,7 @@ import time
 
 from flask_principal import Principal, Permission, RoleNeed
 
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 product = Blueprint('product', __name__)
 admin_permission = Permission(RoleNeed('admin'))

@@ -236,7 +236,7 @@ input::-webkit-inner-spin-button {
     </section> -->
       <!-- End Product Slide -->
     <!-- ======= Specials Section ======= -->
-    <section id="specials" class="specials">
+    <!-- <section id="specials" class="specials">
       <div class="container">
 
         <div class="section-title">
@@ -331,7 +331,7 @@ input::-webkit-inner-spin-button {
         </div>
 
       </div>
-    </section>
+    </section> -->
     <!-- End Specials Section -->
 
 
@@ -499,7 +499,7 @@ input::-webkit-inner-spin-button {
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="view_item" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="view_item" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-md ">
     <div class="modal-content">
       <div class="modal-header">
@@ -515,18 +515,13 @@ input::-webkit-inner-spin-button {
     </div>
   </div>
 </div>
+
 {%endblock%}
 
 {%block jsperfile%}
 <script type="text/javascript">
 
 $(document).ready(function(){
-
-
-
-
-
-
 
 
   //onload
@@ -724,8 +719,8 @@ function view_item(e_id, p_id){
 
       document.getElementById('view_item_content_footer').innerHTML = `
       
-
-          <div class="btn-group btn-group-sm ms-auto">
+      <div class="ms-auto text-end">Quantity:</div>
+          <div class="btn-group btn-group-sm">
             <button type="button" class="btn btn btn-outline-secondary btn-sm" id="minus" onclick="document.getElementById('view_product_qty_${product.id}').value --; validate_qty(document.getElementById('view_product_qty_${product.id}').value, ${product.product_qty}, document.getElementById('view_product_qty_${product.id}'))">-</button>
               <div class="input-group-btn">
                 <input type="number" class="form-control qty-input" id="view_product_qty_${product.id}" placeholder="Quantity" style="border-radius: 0;" min ="1" max = "${product.product_qty}" value="1" onkeyup = "validate_qty(this.value, ${product.product_qty}, this)" onchange="validate_qty(this.value, ${product.product_qty}, this)">
@@ -734,7 +729,7 @@ function view_item(e_id, p_id){
           </div>
 
 
-        <a javascript:void(0) class="book-a-table-btn " id="${product.id}" onclick="add_to_cart(this, document.getElementById('view_product_qty_${product.id}').value)"><i class="bi bi-cart-plus"></i></a>
+        <a javascript:void(0) class="book-a-table-btn " id="${product.id}" onclick="add_to_cart(this, document.getElementById('view_product_qty_${product.id}').value)"><i class="bi bi-cart-plus"> Add to Cart</i></a>
 
 
          `;
@@ -752,15 +747,16 @@ function validate_qty(current_value, max_qty, e){
 }
 
 function add_to_cart(e_id, quantity){
-  //var quantity = document.getElementById("product_qty_"+e.id).value;
-  //alert(e_id.id)
-  //console.log(quantity)
+
   fetch('/carts/add-cart', {
         method: 'POST',
         body: JSON.stringify({"product_id":e_id.id, "order_qty":quantity}),
           }).then((res)=> res.json())
           .then((data)=>{
-            console.log(data)
+          Toast.fire({
+            icon: 'success',
+            title: 'Product added to cart!'
+          })
           })
 }
 
@@ -781,6 +777,11 @@ function add_to_cart(e_id, quantity){
             console.log(res)
                 if (res.redirected) {
               window.location.href = res.url
+            }else{
+              Toast.fire({
+              icon: 'error',
+              title: 'Wrong credentials. Login failed!'
+                 })
             }
       })
     

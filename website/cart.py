@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, abort, session, flash, redirect, url_for, jsonify, request
-from .models import CustomerOrder, Product
+from flask import Blueprint, render_template, session, redirect, url_for, jsonify, request
+from .models import Product
 from . import db
 import json
 import uuid

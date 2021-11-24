@@ -117,10 +117,15 @@
         <ul>
           {% if current_user.is_authenticated %}
           <li><a class="nav-link scrollto" href="/dashboard">Home</a></li>
-          <li><a class="nav-link scrollto" href="/orders">Orders</a></li>
+          <li class="dropdown"><a href="#"><span>Orders</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a class="nav-link scrollto" href="/orders">List of Orders</a></li>
+              <li><a href="/orders/orders-fulfilled-canceled">Fulfilled / Canceled Orders</a></li>
+            </ul>
+          </li>
           <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="#">Change Password</a></li>
+              <!-- <li><a href="#">Change Password</a></li> -->
               <li><a href="/auth/logout">Logout</a></li>
             </ul>
           </li>
@@ -133,7 +138,7 @@
           <li><a class="nav-link scrollto" href="/">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
           <li><a class="nav-link scrollto" href="#menu">Our Products</a></li>
-          <li><a class="nav-link scrollto" href="#specials">Specials</a></li>
+          <!-- <li><a class="nav-link scrollto" href="#specials">Specials</a></li> -->
 
           <li><a class="nav-link scrollto" href="#gallery">Gallery</a></li>
 
@@ -261,6 +266,19 @@
   <script src="{{ url_for('static', filename = '/js/sweetalert2.all.min.js') }}"></script>
 
   <!-- Custom Scripts -->
+  <script type="text/javascript">
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-start',
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+  </script>
 {%block jsperfile%}{%endblock%}
 </body>
 

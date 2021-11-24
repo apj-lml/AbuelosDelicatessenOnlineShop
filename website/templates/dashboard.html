@@ -404,11 +404,13 @@ function remove_product_image(image_id, product_id){
           }).then((res)=>{
             console.log(res)
             products_table.ajax.reload()
-            document.getElementById('product_title'). value = ""
-            document.getElementById('product_price'). value = ""
-            document.getElementById('product_qty'). value = ""
-            document.getElementById('product_description'). value = ""
-            document.getElementById('product_category'). value = ""
+            add_product_form.reset()
+            $('#addProduct').modal('hide');
+            Toast.fire({
+            icon: 'success',
+            title: 'Product edited successfully!'
+                 })
+   
 
             //     if (res.redirected) {
             //   window.location.href = res.url

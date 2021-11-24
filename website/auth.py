@@ -1,13 +1,13 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify, current_app, session
-from werkzeug.security import generate_password_hash, check_password_hash
-from werkzeug.utils import secure_filename
+from werkzeug.security import check_password_hash
+
 from flask_login import current_user, login_user, logout_user, login_required
-from datetime import datetime, date
+
 from .models import User
 from . import db
 import os, os.path
 import json
-from flask_principal import Principal, identity_changed, Identity, AnonymousIdentity
+from flask_principal import identity_changed, Identity, AnonymousIdentity
 
 auth = Blueprint('auth', __name__)
 

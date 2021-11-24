@@ -1,16 +1,12 @@
-from itertools import product
-from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify, current_app, session, Response
-from werkzeug.security import generate_password_hash, check_password_hash
-from werkzeug.utils import secure_filename
-from flask_login import current_user, login_user, logout_user, login_required
-from datetime import datetime, date
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify, current_app, session
+from flask_login import login_required
 from .models import Product, CustomerOrder
 from . import db
-import os, os.path
+import os, os.path	
 import json
-from .jsonEncoder import AlchemyEncoder
-from flask_principal import Principal, Permission, RoleNeed
+from flask_principal import Permission, RoleNeed
 import uuid
+
 orders = Blueprint('orders', __name__)
 admin_permission = Permission(RoleNeed('admin'))
 
@@ -53,10 +49,12 @@ def order_fulfillment(id, status):
 	order = CustomerOrder.query.get(id)
 	order.order_status = status
 	
-	if status == 'Cancel':
+	if status == 'Fulfilled':
 		order_qty = order.order_qty
 		product = Product.query.get(order.product_id)
 		product.product_qty = product.product_qty - order_qty
+	#elif status == 'Cancel':
+
 
 	db.session.commit()
 	return redirect(request.referrer)
@@ -109,7 +107,7 @@ def order_now():
 		formdata = json.loads(request.data)
 		formdata['anonymous_user_id'] = session['anonymous_user_id']
 		formdata['invoice'] = my_random_string(7)
-		print(formdata)
+		
 		#from_cart = json.loads(session['cart'])
 	
 		#print(json.dumps(c))
@@ -119,13 +117,37 @@ def order_now():
 			d.pop('paymentMethod')
 			d.pop('product_price')
 			d.pop('product_title')
-
+			d.pop('product_qty')
+			print(d)
 
 			new_customer_order = CustomerOrder(**d)
 
 			db.session.add(new_customer_order)
 			db.session.flush()
 			db.session.commit()
-
+			
+			
 			print(d)
+		session.pop('cart')
+	return jsonify({})
+
+@orders.route('/orders-fulfilled-canceled', methods=['GET', 'POST'])
+def orders_fulfilled_canceled():
+	if request.method ==  "POST":
+		pass
+	elif request.method == "GET":
+		order_details = db.session.query()\
+		.filter(CustomerOrder.order_status == 'Canceled')
+
+		order_details = db.session.query()\
+		.filter(CustomerOrder.order_status == 'Fulfilled')
+
+
+		order_details = db.session.query(CustomerOrder, Product)\
+		.join(Product, Product.id == CustomerOrder.product_id)
+
+		result = order_details.all()
+		print(result)
+		
+		return render_template('orders-fulfilled-canceled.html', order_details = result)
 	return jsonify({})

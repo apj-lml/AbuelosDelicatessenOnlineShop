@@ -49,7 +49,7 @@
                             
                             <!-- <div class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2">
                             </div> -->
-                            <div>
+                            <div id ="list-group">
                             <a href="/carts/remove-item/{{product.product_id}}" type="button" id="{{product.product_id}}" class="btn-close position-absolute top-0 start-100 p-2" title = "Remove from cart" aria-label="Close"></a>
                               
                               <div class="row mb-2">
@@ -207,7 +207,20 @@
           method: 'POST',
           body: JSON.stringify(data)
         })
-        .then(response => response.json())
+        .then(response => {
+         
+            Toast.fire({
+            icon: 'success',
+            title: 'Order submitted successfully!'
+                 })
+
+            formElem.reset()
+            var cart = document.getElementById("list-group");
+            cart.innerHtml = `<li><h4 class="text-muted">No items in your cart</h4></li>`
+      
+              
+                })
+            return response.json()
         .then(data => data)
         .catch(err => console.error(err));
       });
