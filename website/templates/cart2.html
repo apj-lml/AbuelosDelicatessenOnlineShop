@@ -39,7 +39,7 @@
           <div class="col-md-5 col-lg-4 order-md-last">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
               <span class="">Your cart</span>
-              <span class="badge bg-primary rounded-pill">{% if session['cart']%} {{session['cart']|length}} item in your cart(s) {%else%} 0 {%endif%}</span>
+              <span class="badge bg-primary rounded-pill">{% if session['cart']%} {{session['cart']|length}} item(s) in your cart {%else%} 0 {%endif%}</span>
             </h4>
             <ul class="list-group mb-3">
                 {%set grandtotal = namespace(value=0)%}

@@ -2,15 +2,15 @@
 {% block title %} Abuelo's Delicatessen {%endblock%}
 {% block cssperfile %}
 <style>
-  .card-img {
+  /* .card-img {
     width: 100%;
     height: 18vw;
-    /* object-fit: cover; */
+
 }
 .card-img img{
   width: 100%;
   height: 100%;
-}
+} */
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -23,7 +23,48 @@ input::-webkit-inner-spin-button {
   -moz-appearance: textfield;
   text-align: center;
 }
-
+.my-carousel-inner {
+  padding: 1em;
+}
+.my-card {
+  margin: 0 0.5em;
+  box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+  border: none;
+}
+.my-carousel-control-prev,
+.my-carousel-control-next {
+  background-color: #e1e1e1;
+  width: 6vh;
+  height: 6vh;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+@media (min-width: 768px) {
+  .my-carousel-item {
+    margin-right: 0;
+    flex: 0 0 33.333333%;
+    display: block;
+  }
+  .my-carousel-inner {
+    display: flex;
+  }
+}
+.my-card .img-wrapper {
+    max-width: 100%;
+    height: 13em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.my-card img {
+    max-height: 100%;
+}
+@media (max-width: 767px) {
+  .my-card .img-wrapper {
+    height: 17em;
+  }
+}
 </style>
 {%endblock%}
 {%block content%}
@@ -138,8 +179,31 @@ input::-webkit-inner-spin-button {
       </div>
     </section><!-- End Menu Section -->
 
-    <!-- ======= Product Slide Section ======= -->
+
     <section class="menu">
+      <div class="container">
+        <div id="carouselExampleControls" class="carousel" data-bs-ride="carousel">
+          <div class="carousel-inner my-carousel-inner" id="products_cards">
+
+
+            </div>
+            <button class="carousel-control-prev my-carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next my-carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+          </button>
+            </div>
+     
+
+      </div>
+    </section>
+
+
+    <!-- ======= Product Slide Section ======= -->
+    <!-- <section class="menu">
         <div class="container text-center my-3">
           <div class="section-title">
             <h2>Fresh <span>Stocks!</span></h2>
@@ -147,7 +211,7 @@ input::-webkit-inner-spin-button {
           <div class="row mx-auto my-auto justify-content-center">
               <div id="carouselExampleInterval" class="carousel slide carousel-dark" data-bs-ride="carousel">
                   <div class="carousel-inner" role="listbox" id="products_card">
-                      <!-- <div class="carousel-item">
+                      <div class="carousel-item">
                           <div class="col-md-3">
                               <div class="card">
                                   <div class="card-img">
@@ -156,7 +220,7 @@ input::-webkit-inner-spin-button {
                                   <div class="card-img-overlay">Slide 6</div>
                               </div>
                           </div>
-                      </div> -->
+                      </div>
                   </div>
                   <a class="carousel-control-prev bg-transparent w-aut" href="#carouselExampleInterval" role="button" data-bs-slide="prev">
                       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -166,12 +230,13 @@ input::-webkit-inner-spin-button {
                   </a>
               </div>
           </div>
-          <!-- <h5 class="mt-2 fw-light">advances one slide at a time</h5> -->
-      </div><!-- End Product Slide -->
-    </section>
 
+      </div>
+
+    </section> -->
+      <!-- End Product Slide -->
     <!-- ======= Specials Section ======= -->
-    <!-- <section id="specials" class="specials">
+    <section id="specials" class="specials">
       <div class="container">
 
         <div class="section-title">
@@ -266,7 +331,7 @@ input::-webkit-inner-spin-button {
         </div>
 
       </div>
-    </section> -->
+    </section>
     <!-- End Specials Section -->
 
 
@@ -435,7 +500,7 @@ input::-webkit-inner-spin-button {
 
 <!-- Modal -->
 <div class="modal fade" id="view_item" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable ">
+  <div class="modal-dialog modal-dialog-scrollable modal-md ">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="showImages">Product Details</h5>
@@ -456,6 +521,13 @@ input::-webkit-inner-spin-button {
 <script type="text/javascript">
 
 $(document).ready(function(){
+
+
+
+
+
+
+
 
   //onload
   fetch('/product/product-get', {
@@ -486,88 +558,109 @@ $(document).ready(function(){
             // console.log(product.product_image[0].file_name)
             if(count_active <= 1){
              
-              document.getElementById('products_card').innerHTML += `
-                      <div class="carousel-item active ">
-                          <div class="col-md-4 col-xs-4 mx-auto">
-                              <div class="card h-100">
-                                  <div class="card-img">
-                                      <img src="/static/img/product_images/${product.product_image[0].file_name}" class="img-fluid">
-                                  </div>
-                                  <div class="card-body text-center">
-                                    <h4 class="card-title">${product.product_title}</h4>
-                                    <p class ="card-text" ><small class="text-muted">${product.product_description}</small></p>
-                                    <div class="input-group mb-3  col-sm-12">
-                                      <h5 class="text-muted text-center col-sm-12">Php ${product.product_price}</h5>
-                                    </div>
-                                    <div class="input-group mb-3">
-                                        
-                                      <div class="btn-group btn-group-sm mx-auto">
-                                          <button type="button" class="btn btn btn-outline-secondary btn-sm" id="minus" onclick="document.getElementById('product_qty_${product.id}').value --; validate_qty(document.getElementById('product_qty_${product.id}').value, ${product.product_qty}, document.getElementById('product_qty_${product.id}'))">-</button>
-                                            <div class="input-group-btn">
-                                              <input type="number" class="form-control qty-input" id="product_qty_${product.id}" placeholder="Quantity" style="border-radius: 0;" min ="1" max = "${product.product_qty}" value="1" onkeyup = "validate_qty(this.value, ${product.product_qty}, this)" onchange="validate_qty(this.value, ${product.product_qty}, this)">
-                                            </div>
-                                          <button type="button" class="btn btn btn-outline-secondary btn-sm" id="plus" onclick="document.getElementById('product_qty_${product.id}').value ++; validate_qty(document.getElementById('product_qty_${product.id}').value, ${product.product_qty}, document.getElementById('product_qty_${product.id}'))">+</button>
-                                        </div>
-
-                                      </div>
-                                      <a javascript:void(0) class="book-a-table-btn mx-auto" id="view_item_${product.id}" data-bs-toggle="modal" data-bs-target="#view_item" onclick="view_item(this.id, ${product.id})"><i class="bi bi-eye"></i></a>
-                                    <a javascript:void(0) class="book-a-table-btn mx-auto" id="${product.id}" onclick="add_to_cart(this, document.getElementById('product_qty_${product.id}').value)"><i class="bi bi-cart-plus"></i></a>
-                                  </div>
-                              </div>
+              document.getElementById('products_cards').innerHTML += `
+              <div class="carousel-item my-carousel-item">
+                  <div class="card my-card">
+                    <div class="img-wrapper my-img-wrapper"><img src="/static/img/product_images/${product.product_image[0].file_name}" class="d-block w-100" alt="..."> </div>
+                      <div class="card-body">
+                        <h4 class="card-title text-center">${product.product_title}</h4>
+                          <p class ="card-text" >
+                            <div class="text-muted text-center">${product.product_description}</div>
+                            </p>
+                          <div class="input-group mb-3  col-sm-12">
+                            <h5 class="text-muted text-center col-sm-12">Php ${product.product_price}</h5>
                           </div>
-                      </div>
+        
+                          <div class="input-group mb-3">
+                                        
+                          <div class="btn-group btn-group-sm mx-auto">
+                              <button type="button" class="btn btn btn-outline-secondary btn-sm" id="minus" onclick="document.getElementById('product_qty_${product.id}').value --; validate_qty(document.getElementById('product_qty_${product.id}').value, ${product.product_qty}, document.getElementById('product_qty_${product.id}'))">-</button>
+                                <div class="input-group-btn">
+                                  <input type="number" class="form-control qty-input" id="product_qty_${product.id}" placeholder="Quantity" style="border-radius: 0;" min ="1" max = "${product.product_qty}" value="1" onkeyup = "validate_qty(this.value, ${product.product_qty}, this)" onchange="validate_qty(this.value, ${product.product_qty}, this)">
+                                </div>
+                              <button type="button" class="btn btn btn-outline-secondary btn-sm" id="plus" onclick="document.getElementById('product_qty_${product.id}').value ++; validate_qty(document.getElementById('product_qty_${product.id}').value, ${product.product_qty}, document.getElementById('product_qty_${product.id}'))">+</button>
+                            </div>
+
+                          </div>
+                          <div class = "text-center">
+                            <a javascript:void(0) class="book-a-table-btn mx-auto" id="view_item_${product.id}" data-bs-toggle="modal" data-bs-target="#view_item" onclick="view_item(this.id, ${product.id})"><i class="bi bi-eye"></i></a>
+                            <a javascript:void(0) class="book-a-table-btn mx-auto" id="${product.id}" onclick="add_to_cart(this, document.getElementById('product_qty_${product.id}').value)"><i class="bi bi-cart-plus"></i></a>   
+                          </div>
+                     </div>
+                  </div>
+              </div>
+
               `;
 
             }else{
-              document.getElementById('products_card').innerHTML += `
-                      <div class="carousel-item">
-                          <div class="col-md-4 col-xs-4 mx-auto">
-                              <div class="card">
-                                  <div class="card-img">
-                                    <img src="/static/img/product_images/${product.product_image[0].file_name}" class="img-fluid">
-                                  </div>
-                                  <div class="card-body text-center">
-                                    <h4 class="card-title">${product.product_title}</h4>
-                                    <p class ="card-text" ><small class=" text-muted">${product.product_description}</small></p>
-                                      <div class="input-group mb-3  col-sm-12">
-                                        <h5 class="text-muted text-center col-sm-12">Php ${product.product_price}</h5>
-                                      </div>
-                                      <div class="input-group mb-3">
-                                        
-                                        <div class="btn-group btn-group-sm mx-auto">
-                                          <button type="button" class="btn btn btn-outline-secondary btn-sm" id="minus" onclick="document.getElementById('product_qty_${product.id}').value --; validate_qty(document.getElementById('product_qty_${product.id}').value, ${product.product_qty}, document.getElementById('product_qty_${product.id}'))">-</button>
-                                            <div class="input-group-btn">
-                                              <input type="number" class="form-control qty-input" id="product_qty_${product.id}" placeholder="Quantity" style="border-radius: 0;" min ="1" max = "${product.product_qty}" value="1" onkeyup = "validate_qty(this.value, ${product.product_qty}, this)" onchange="validate_qty(this.value, ${product.product_qty}, this)">
-                                            </div>
-                                          <button type="button" class="btn btn btn-outline-secondary btn-sm" id="plus" onclick="document.getElementById('product_qty_${product.id}').value ++; validate_qty(document.getElementById('product_qty_${product.id}').value, ${product.product_qty}, document.getElementById('product_qty_${product.id}'))">+</button>
-                                        </div>
-
-                                      </div>
-                                      <a javascript:void(0) class="book-a-table-btn  mx-auto" id="view_item_${product.id}" data-bs-toggle="modal" data-bs-target="#view_item" onclick="view_item(this.id, ${product.id})"><i class="bi bi-eye"></i></a>
-                                    <a javascript:void(0) class="book-a-table-btn  mx-auto" id="${product.id}" onclick="add_to_cart(this, document.getElementById('product_qty_${product.id}').value)"><i class="bi bi-cart-plus"></i></a>
-                                  </div>
-                              </div>
+              document.getElementById('products_cards').innerHTML += `
+              <div class="carousel-item my-carousel-item">
+                  <div class="card my-card">
+                    <div class="img-wrapper my-img-wrapper"><img src="/static/img/product_images/${product.product_image[0].file_name}" class="d-block w-100" alt="..."> </div>
+                      <div class="card-body">
+                        <h4 class="card-title text-center">${product.product_title}</h4>
+                          <p class ="card-text" >
+                            <div class="text-muted text-center">${product.product_description}</div>
+                            </p>
+                          <div class="input-group mb-3  col-sm-12">
+                            <h5 class="text-muted text-center col-sm-12">Php ${product.product_price}</h5>
                           </div>
-                      </div>
+        
+                          <div class="input-group mb-3">
+                                        
+                          <div class="btn-group btn-group-sm mx-auto">
+                              <button type="button" class="btn btn btn-outline-secondary btn-sm" id="minus" onclick="document.getElementById('product_qty_${product.id}').value --; validate_qty(document.getElementById('product_qty_${product.id}').value, ${product.product_qty}, document.getElementById('product_qty_${product.id}'))">-</button>
+                                <div class="input-group-btn">
+                                  <input type="number" class="form-control qty-input" id="product_qty_${product.id}" placeholder="Quantity" style="border-radius: 0;" min ="1" max = "${product.product_qty}" value="1" onkeyup = "validate_qty(this.value, ${product.product_qty}, this)" onchange="validate_qty(this.value, ${product.product_qty}, this)">
+                                </div>
+                              <button type="button" class="btn btn btn-outline-secondary btn-sm" id="plus" onclick="document.getElementById('product_qty_${product.id}').value ++; validate_qty(document.getElementById('product_qty_${product.id}').value, ${product.product_qty}, document.getElementById('product_qty_${product.id}'))">+</button>
+                            </div>
+
+                          </div>
+                          <div class = "text-center">
+                            <a javascript:void(0) class="book-a-table-btn mx-auto" id="view_item_${product.id}" data-bs-toggle="modal" data-bs-target="#view_item" onclick="view_item(this.id, ${product.id})"><i class="bi bi-eye"></i></a>
+                            <a javascript:void(0) class="book-a-table-btn mx-auto" id="${product.id}" onclick="add_to_cart(this, document.getElementById('product_qty_${product.id}').value)"><i class="bi bi-cart-plus"></i></a>   
+                            </div>
+                        </div>
+                  </div>
+              </div>
+
               `
             }
             count_active += 1;  
             });
 
-            let items = document.querySelectorAll('#carouselExampleInterval .carousel-item')
-            items.forEach((el) => {
-              // number of slides per carousel-item
-              const minPerSlide = 3
-              let next = el.nextElementSibling
-              for (var i=1; i<minPerSlide; i++) {
-                  if (!next) {
-                      next = items[0]
-                  }
-                  let cloneChild = next.cloneNode(true)
-                  el.appendChild(cloneChild.children[0])
-                  next = next.nextElementSibling
-              }
-            })
+            var multipleCardCarousel = document.querySelector(
+  "#carouselExampleControls"
+);
+if (window.matchMedia("(min-width: 768px)").matches) {
+  var carousel = new bootstrap.Carousel(multipleCardCarousel, {
+    interval: false,
+  });
+  var carouselWidth = $(".my-carousel-inner")[0].scrollWidth;
+  var cardWidth = $(".my-carousel-item").width();
+  var scrollPosition = 0;
+  $("#carouselExampleControls .my-carousel-control-next").on("click", function () {
+    if (scrollPosition < carouselWidth - cardWidth * 4) {
+      scrollPosition += cardWidth;
+      $("#carouselExampleControls .my-carousel-inner").animate(
+        { scrollLeft: scrollPosition },
+        600
+      );
+    }
+  });
+  $("#carouselExampleControls .my-carousel-control-prev").on("click", function () {
+    if (scrollPosition > 0) {
+      scrollPosition -= cardWidth;
+      $("#carouselExampleControls .my-carousel-inner").animate(
+        { scrollLeft: scrollPosition },
+        600
+      );
+    }
+  });
+} else {
+  $(multipleCardCarousel).addClass("slide");
+}
           })
    
 });
@@ -591,8 +684,8 @@ function view_item(e_id, p_id){
               }
                card_carousel += `
              
-               <div class="carousel-item ${carousel_active}">
-                 <img src="/static/img/product_images/${images.file_name}" class="d-block w-100" alt="https://via.placeholder.com/400">
+               <div class="carousel-item ${carousel_active} ">
+                 <img src="/static/img/product_images/${images.file_name}" class="d-block w-100 mx-auto" alt="https://via.placeholder.com/400">
                  <div class="carousel-caption d-none d-md-block">
                    <h3>${product.product_title}</h3>
                    <p class="card-text">${product.product_description}</p>
@@ -610,6 +703,7 @@ function view_item(e_id, p_id){
              <div class="carousel-inner">
               ${card_carousel}
              </div>
+
              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                <span class="visually-hidden">Previous</span>
@@ -622,7 +716,6 @@ function view_item(e_id, p_id){
            <div class="card-body">
              <h5 class="card-title"><strong>Php ${product.product_price}</strong></h5>
              <p class="card-text"><span class="text-muted">Stock Available: ${product.product_qty}</span></p>
-             <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
            </div>
          </div>
  
@@ -630,14 +723,18 @@ function view_item(e_id, p_id){
 
 
       document.getElementById('view_item_content_footer').innerHTML = `
-         <div class="btn-group btn-group-sm mx-auto">
-          <button type="button" class="btn btn btn-outline-secondary btn-sm" id="minus" onclick="document.getElementById('view_product_qty_${product.id}').value --; validate_qty(document.getElementById('view_product_qty_${product.id}').value, ${product.product_qty}, document.getElementById('view_product_qty_${product.id}'))">-</button>
-            <div class="input-group-btn">
-              <input type="number" class="form-control qty-input" id="view_product_qty_${product.id}" placeholder="Quantity" style="border-radius: 0;" min ="1" max = "${product.product_qty}" value="1" onkeyup = "validate_qty(this.value, ${product.product_qty}, this)" onchange="validate_qty(this.value, ${product.product_qty}, this)">
-            </div>
-          <button type="button" class="btn btn btn-outline-secondary btn-sm" id="plus" onclick="document.getElementById('view_product_qty_${product.id}').value ++; validate_qty(document.getElementById('view_product_qty_${product.id}').value, ${product.product_qty}, document.getElementById('view_product_qty_${product.id}'))">+</button>
-        </div>
-        <a javascript:void(0) class="book-a-table-btn  mx-auto" id="${product.id}" onclick="add_to_cart(this, document.getElementById('view_product_qty_${product.id}').value)"><i class="bi bi-cart-plus"></i></a>
+      
+
+          <div class="btn-group btn-group-sm ms-auto">
+            <button type="button" class="btn btn btn-outline-secondary btn-sm" id="minus" onclick="document.getElementById('view_product_qty_${product.id}').value --; validate_qty(document.getElementById('view_product_qty_${product.id}').value, ${product.product_qty}, document.getElementById('view_product_qty_${product.id}'))">-</button>
+              <div class="input-group-btn">
+                <input type="number" class="form-control qty-input" id="view_product_qty_${product.id}" placeholder="Quantity" style="border-radius: 0;" min ="1" max = "${product.product_qty}" value="1" onkeyup = "validate_qty(this.value, ${product.product_qty}, this)" onchange="validate_qty(this.value, ${product.product_qty}, this)">
+              </div>
+            <button type="button" class="btn btn btn-outline-secondary btn-sm" id="plus" onclick="document.getElementById('view_product_qty_${product.id}').value ++; validate_qty(document.getElementById('view_product_qty_${product.id}').value, ${product.product_qty}, document.getElementById('view_product_qty_${product.id}'))">+</button>
+          </div>
+
+
+        <a javascript:void(0) class="book-a-table-btn " id="${product.id}" onclick="add_to_cart(this, document.getElementById('view_product_qty_${product.id}').value)"><i class="bi bi-cart-plus"></i></a>
 
 
          `;
@@ -656,8 +753,8 @@ function validate_qty(current_value, max_qty, e){
 
 function add_to_cart(e_id, quantity){
   //var quantity = document.getElementById("product_qty_"+e.id).value;
-  alert(e_id.id)
-  console.log(quantity)
+  //alert(e_id.id)
+  //console.log(quantity)
   fetch('/carts/add-cart', {
         method: 'POST',
         body: JSON.stringify({"product_id":e_id.id, "order_qty":quantity}),

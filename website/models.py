@@ -46,9 +46,11 @@ class Product(db.Model, SerializerMixin):
 	product_price = db.Column(db.String(250))
 	product_qty = db.Column(db.Integer)
 	product_category = db.Column(db.String(250))
+	product_special = db.Column(db.String(250), default='not spl')
 	product_image = db.relationship('ProductImage')
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	customer_orders = db.relationship('CustomerOrder')
+
 	#customer_orders = db.relationship('CustomerOrder',secondary='link')
 	#customer_order = db.Column(db.Integer, db.ForeignKey('customer_order.id'))
 	
