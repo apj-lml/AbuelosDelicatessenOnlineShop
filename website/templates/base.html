@@ -148,11 +148,11 @@
           <li>
           </li>
         </ul>
-      
+ 
       {%endif%}
       <i class="bi bi-list mobile-nav-toggle"></i>
     </nav>
-    {% if not current_user.is_authenticated %}
+    {% if not current_user.is_authenticated and request.path != '/carts/view-cart'%}
     <a href="#login" class="book-a-table-btn scrollto" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
     {%endif%}
     </div>

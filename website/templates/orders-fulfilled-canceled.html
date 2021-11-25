@@ -25,6 +25,7 @@
                   <div class="col-md">
                   <div class="table-responsive">
 
+         
                     <table id="fulfilled_canceled_table" class="table table-striped align-middle display nowrap" style="width:100%">
                         <thead>
                             <tr>
@@ -58,8 +59,7 @@
                               <td>{{ order_detail.CustomerOrder.timestamp.strftime('%m-%d-%Y') }}</td>
                               <td>{{ order_detail.Product.product_price }}</td>
                               <td>{{ order_detail.CustomerOrder.order_qty|float * order_detail.Product.product_price|float }}</td>
-                              
-                          
+
                           </tr>
                       {% endfor %}
                         </tbody>
@@ -73,6 +73,7 @@
                         
                       
                   
+        
                       </div>
                   </div>
                 </div>

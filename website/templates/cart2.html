@@ -39,9 +39,9 @@
           <div class="col-md-5 col-lg-4 order-md-last">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
               <span class="">Your cart</span>
-              <span class="badge bg-primary rounded-pill">{% if session['cart']%} {{session['cart']|length}} item(s) in your cart {%else%} 0 {%endif%}</span>
+              <span class="badge bg-primary rounded-pill" id="cart_count">{% if session['cart']%} {{session['cart']|length}} item(s) in your cart {%else%} 0 {%endif%}</span>
             </h4>
-            <ul class="list-group mb-3">
+            <ul class="list-group mb-3" id ="list-group">
                 {%set grandtotal = namespace(value=0)%}
                 {% if session['cart'] %}
                   {% for key, product in session['cart'].items() %}
@@ -49,7 +49,7 @@
                             
                             <!-- <div class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2">
                             </div> -->
-                            <div id ="list-group">
+                            <div >
                             <a href="/carts/remove-item/{{product.product_id}}" type="button" id="{{product.product_id}}" class="btn-close position-absolute top-0 start-100 p-2" title = "Remove from cart" aria-label="Close"></a>
                               
                               <div class="row mb-2">
@@ -201,28 +201,51 @@
         const data = {}
         formdata.forEach((value, key) => (data[key] = value))
 
-        console.log(data)
+        let error_ctr = 0;
 
-        fetch('/orders/order-now',{
-          method: 'POST',
-          body: JSON.stringify(data)
-        })
-        .then(response => {
-         
+          var elements = document.getElementById("order_now_form").elements;
+          for (var i = 0, element; element = elements[i++];) {
+              if (element.type === "text" && element.value === "")
+                error_ctr++
+          }
+
+          if (error_ctr > 0){
             Toast.fire({
-            icon: 'success',
-            title: 'Order submitted successfully!'
-                 })
+              icon: 'error',
+              title: 'Please fillout form properly!'
+                  })
+          }else{
+            fetch('/orders/order-now',{
+            method: 'POST',
+            body: JSON.stringify(data)
+            })
+          .then(response => {
+            if(response.status == '200'){
+              Toast.fire({
+              icon: 'success',
+              title: 'Order submitted successfully!'
+                  })
 
-            formElem.reset()
-            var cart = document.getElementById("list-group");
-            cart.innerHtml = `<li><h4 class="text-muted">No items in your cart</h4></li>`
-      
+                  for (var i = 0, element; element = elements[i++];) {
+                    element.value = ""
+                
+                }
+
+              //formElem.reset()
+            document.getElementById("list-group").innerHTML = `<li><h4 class="text-muted">No items in your cart</h4></li>`
+            document.getElementById("cart_count").innerHTML = `0`
+
+        
               
-                })
+            }
             return response.json()
-        .then(data => data)
-        .catch(err => console.error(err));
+
+                  })
+            
+          .then(data => {data})
+          }
+
+
       });
 
 

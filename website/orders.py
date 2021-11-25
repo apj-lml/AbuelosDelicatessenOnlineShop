@@ -103,7 +103,7 @@ def my_random_string(string_length=10):
 
 @orders.route('/order-now', methods=['GET', 'POST'])
 def order_now():
-	if request.method ==  "POST":
+	if request.method == "POST" and 'cart' in session:
 		formdata = json.loads(request.data)
 		formdata['anonymous_user_id'] = session['anonymous_user_id']
 		formdata['invoice'] = my_random_string(7)
@@ -129,7 +129,9 @@ def order_now():
 			
 			print(d)
 		session.pop('cart')
-	return jsonify({})
+		return jsonify({})
+	else:
+		return 'forbidden', 403
 
 @orders.route('/orders-fulfilled-canceled', methods=['GET', 'POST'])
 def orders_fulfilled_canceled():
