@@ -526,7 +526,8 @@ $(document).ready(function(){
 
   //onload
   fetch('/product/product-get', {
-        method: 'GET',
+        method: 'POST',
+        body: JSON.stringify({"page":"homepage"}),
           }).then(response => response.json())
           .then(data => {
             // console.log(data)

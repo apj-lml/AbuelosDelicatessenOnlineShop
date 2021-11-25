@@ -163,8 +163,17 @@ def product_get():
         return jsonify(rows_dic)
     else:
         formdata = json.loads(request.data)
-        product_id = formdata['id']
-        products = Product.query.get(product_id)
+        
+        if 'page' in formdata:
+            products = db.session.query(Product).filter(Product.product_qty > 0).all()
+            rows_dic = []
+            for item in products:
+            #print(item.to_dict())
+                rows_dic.append(item.to_dict())
+            return jsonify(rows_dic)
+        else:
+            product_id = formdata['id']
+            products = Product.query.get(product_id)
         result = products.to_dict()
        # print(result)
         return jsonify(result)
