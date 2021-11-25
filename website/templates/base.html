@@ -148,12 +148,13 @@
           <li>
           </li>
         </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav>
-
-      <a href="#login" class="book-a-table-btn scrollto" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
       
       {%endif%}
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav>
+    {% if not current_user.is_authenticated %}
+    <a href="#login" class="book-a-table-btn scrollto" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+    {%endif%}
     </div>
   </header><!-- End Header -->
 

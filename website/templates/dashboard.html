@@ -129,7 +129,7 @@
               <!-- </div> -->
             </div>
           </div>
-          <div class="row">
+          <div class="row" id="product_images_control">
             <div class="col-md">
               <!-- <div class="d-sm-flex flex-row"> -->
                 <div class="form-group">
@@ -247,6 +247,7 @@
       
   }, 300);
   function add_product_btn(){
+    document.getElementById('product_images_control').style.display = 'block'
     document.getElementById('add_or_update').value = 'add'
     document.getElementById('modal-title').innerHTML = 'Add Product'; 
     document.getElementById('add_product_button').innerHTML = 'Add'
@@ -280,7 +281,7 @@
       document.getElementById('add_or_update').value = 'edit'
       document.getElementById('modal-title').innerHTML = 'Edit Product'
       document.getElementById('add_product_button').innerHTML = 'Update'
-
+      document.getElementById('product_images_control').style.display = 'none'
       
       fetch('/product/product-get', {
         method: 'POST',
@@ -408,7 +409,7 @@ function remove_product_image(image_id, product_id){
             $('#addProduct').modal('hide');
             Toast.fire({
             icon: 'success',
-            title: 'Product edited successfully!'
+            title: 'Product added successfully!'
                  })
    
 
