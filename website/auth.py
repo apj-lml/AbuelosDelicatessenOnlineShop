@@ -40,6 +40,24 @@ def login():
 			flash('Email does not exist', category='error')
 	return render_template('index.html', user=current_user)
 
+@auth.route('/change-pass', methods=['GET', 'POST'])
+@login_required
+def change_pass	():
+	if request.method == 'POST':
+		formdata = json.loads(request.data)
+		current_password = formdata['current_password']
+		new_password = formdata['new_password']
+		confirm_password = formdata['confirm_password']
+
+		user = User.query.filter_by(email=current_user.email).first()
+		if user:
+			if check_password_hash(user.password, current_password):
+				
+				pass
+				
+			else:
+				return 'wrong current password', 204
+	return render_template('index.html', user=current_user)
 
 @auth.route('/logout', methods=['GET', 'POST'])
 @login_required

@@ -125,7 +125,7 @@
           </li>
           <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <!-- <li><a href="#">Change Password</a></li> -->
+              <li><a href="#" data-bs-toggle="modal" data-bs-target="#changePassword">Change Password</a></li>
               <li><a href="/auth/logout">Logout</a></li>
             </ul>
           </li>
@@ -225,6 +225,41 @@
 {% endif %}
   {%block content%} {%endblock%}
 
+  <!-- Modal -->
+  <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" id="changePassword">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Change Password</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form class="needs-validation" novalidate method="POST" id="change_password_form">
+          <div class="modal-body">
+              <div class="form-group">
+                <label for="current_password">Current Password</label>
+                <input type="password" class="form-control" id="current_password" name="current_password" required>
+                <div class="invalid-feedback">
+                  Current password does not match!
+                </div>
+
+              </div>
+              <div class="form-group">
+                <label for="new_password">New Password</label>
+                <input type="password" class="form-control" id="new_password" name="new_password">
+              </div>
+              <div class="form-group">
+                <label for="login_password">Confirm Password</label>
+                <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn book-a-table-btn">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- ======= Footer ======= -->
   <footer id="footer" class="mt-5">
     <div class="container">
@@ -279,6 +314,74 @@
               toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
           })
+
+var formElemCp = document.getElementById("change_password_form");
+
+formElemCp.addEventListener("submit",(e)=>{
+  e.preventDefault()
+  let formdata = new FormData(formElemCp);
+
+  const data = {}
+  formdata.forEach((value, key) => (data[key] = value))
+
+  let error_ctr = 0;
+  var elementCp = formElemCp.elements;
+
+    for (var i = 0, element; element = elementCp[i++];) {
+        if (element.type === 'password' && element.value === ""){
+          error_ctr++
+        }
+         
+    }
+    if (error_ctr > 0){
+      Toast.fire({
+        icon: 'error',
+        title: 'Please fillout form properly!'
+            })
+            error_ctr = 0;
+          }
+
+    else{
+      fetch('/auth/change-pass',{
+      method: 'POST',
+      body: JSON.stringify(data)
+      })
+    .then(response => {
+      if(response.status == '200'){
+        Toast.fire({
+        icon: 'success',
+        title: 'Password changed successfully!'
+            })
+
+            error_ctr = 0;
+            var myModalEl = document.getElementById('changePassword')
+            var modal = bootstrap.Modal.getInstance(myModalEl)
+            modal.hide()
+
+            for (var i = 0, element; element = elementCp[i++];) {
+              if (element.type === 'password'){
+                element.value = "";
+              }
+              
+    }
+    
+      }
+      else if(response.status == '204'){
+        Toast.fire({
+        icon: 'error',
+        title: 'Wrong current password!'
+            })
+            error_ctr = 0;
+      }
+      // return response.json()
+
+            })
+      
+ 
+    }
+
+
+});
   </script>
 {%block jsperfile%}{%endblock%}
 </body>
