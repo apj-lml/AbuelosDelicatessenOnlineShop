@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify, current_app, session
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from flask_login import current_user, login_user, logout_user, login_required
 
@@ -48,15 +48,18 @@ def change_pass	():
 		current_password = formdata['current_password']
 		new_password = formdata['new_password']
 		confirm_password = formdata['confirm_password']
-
-		user = User.query.filter_by(email=current_user.email).first()
-		if user:
-			if check_password_hash(user.password, current_password):
-				
-				pass
-				
-			else:
-				return 'wrong current password', 204
+		if len(new_password) <5:
+			return 'password length error', 417
+		if new_password == confirm_password:
+			user = User.query.filter_by(email=current_user.email).first()
+			if user:
+				if check_password_hash(user.password, current_password):
+					user.password = generate_password_hash(new_password)
+					db.session.commit()
+				else:
+					return 'wrong current password', 204
+		else:
+			return 'password does not match', 418
 	return render_template('index.html', user=current_user)
 
 @auth.route('/logout', methods=['GET', 'POST'])

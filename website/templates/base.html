@@ -226,7 +226,7 @@
   {%block content%} {%endblock%}
 
   <!-- Modal -->
-  <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" id="changePassword">
+  <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" id="changePassword" aria-modal="true" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -259,18 +259,60 @@
       </div>
     </div>
   </div>
-
+   <!-- Modal -->
+   <!-- <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" id="viewProduct" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="modal-title">Order Detail</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="#" method="POST" id="order_detail_form">
+          <div class="modal-body">
+            <section class="inner-page">
+              <div class="container">
+                  <div class="row">
+                    <div class="col-md">
+                    <div class="table-responsive">
+                      <table id="order_detail_table" class="table table-striped align-middle" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Delivery Address</th>
+                                <th>Email</th>
+                                <th>Contact #</th>
+                                <th>Order Status</th>
+                                <th>Order Date</th>
+                                <th>Controls</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        </table>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+            </section>
+          <div class="modal-footer">
+            <button type="submit" class="btn book-a-table-btn" id="add_product_button">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div> -->
   <!-- ======= Footer ======= -->
   <footer id="footer" class="mt-5">
     <div class="container">
       <h3>Abuelo's Delicatessen</h3>
       <!-- <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi placeat.</p> -->
       <div class="social-links">
-        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+        <!-- <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a> -->
+        <a href="facebook.com/abuelosdeli" class="facebook"><i class="bx bxl-facebook"></i></a>
+        <a href="instagram.com/abuelosdeli" class="instagram"><i class="bx bxl-instagram"></i></a>
+        <!-- <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a> -->
       </div>
       <div class="copyright">
         &copy; Copyright <strong><span>Abuelo's Delicatessen</span></strong>. All Rights Reserved
@@ -303,17 +345,17 @@
 
   <!-- Custom Scripts -->
   <script type="text/javascript">
-          const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-start',
-            showConfirmButton: false,
-            timer: 4000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener('mouseenter', Swal.stopTimer)
-              toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-          })
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-start',
+    showConfirmButton: false,
+    timer: 4000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
 
 var formElemCp = document.getElementById("change_password_form");
 
@@ -347,6 +389,7 @@ formElemCp.addEventListener("submit",(e)=>{
       body: JSON.stringify(data)
       })
     .then(response => {
+      //console.log(response.json())
       if(response.status == '200'){
         Toast.fire({
         icon: 'success',
@@ -370,6 +413,19 @@ formElemCp.addEventListener("submit",(e)=>{
         Toast.fire({
         icon: 'error',
         title: 'Wrong current password!'
+            })
+            error_ctr = 0;
+          }
+      else if(response.status == '417'){
+        Toast.fire({
+        icon: 'error',
+        title: 'Password must be at least 5 characters!'
+            })
+            error_ctr = 0;
+      }else{
+        Toast.fire({
+        icon: 'error',
+        title: 'New password and Confirm password does not match!'
             })
             error_ctr = 0;
       }
